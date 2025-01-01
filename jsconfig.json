@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"], // Base src alias
+      "@assets/*": ["src/assets/*"], // Assets
+      "@components/*": ["src/components/*"], // Components
+      "@hooks/*": ["src/hooks/*"], // Hooks
+      "@store/*": ["src/store/*"], // Store
+      "@lib/*": ["src/lib/*"] // Utilities
+    }
+  },
+  "exclude": ["node_modules"]
+}

@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 import { Button } from "@components/ui/button";
 import { Play } from "lucide-react";
 import { usePlayerStore } from "@/store/playerStore";
-import { ScrollArea } from "./ui/scroll-area";
 
 const dummyStations = [
   {
@@ -33,7 +32,7 @@ const dummyStations = [
   {
     id: 5,
     name: "Radio Sarangi",
-    province: "Province 1",
+    province: "Koshi Province",
     url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
   },
   {
@@ -67,44 +66,42 @@ export default function StationList({ selectedProvince, searchTerm }) {
       station.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
-    <ScrollArea className="h-[70vh] w-full pr-2">
-      <div
-        className={`grid gap-4 m-2 mb-6 ${
-          isMobile ? "grid-cols-1" : "md:grid-cols-2 lg:grid-cols-3"
-        }`}
-      >
-        {filteredStations.map((station) => (
-          <Card
-            key={station.id}
-            className="bg-transparent text-card-foreground cursor-pointer rounded-xl transition-all duration-300 transform hover:scale-95"
-          >
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle
-                className={`font-medium ${isMobile ? "text-sm" : "text-base"}`}
-              >
-                {station.name}
-              </CardTitle>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => setCurrentStation(station)}
-              >
-                <Play className="h-4 w-4" />
-                <span className="sr-only">Play {station.name}</span>
-              </Button>
-            </CardHeader>
-            <CardContent>
-              <p
-                className={`text-muted-foreground ${
-                  isMobile ? "text-xs" : "text-sm"
-                }`}
-              >
-                {station.province}
-              </p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </ScrollArea>
+    <div
+      className={`grid gap-4 m-2 mb-6 ${
+        isMobile ? "grid-cols-1" : "md:grid-cols-2 lg:grid-cols-3"
+      }`}
+    >
+      {filteredStations.map((station) => (
+        <Card
+          key={station.id}
+          className="bg-transparent text-card-foreground cursor-pointer rounded-xl transition-all duration-300 transform hover:scale-95"
+        >
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle
+              className={`font-medium ${isMobile ? "text-sm" : "text-base"}`}
+            >
+              {station.name}
+            </CardTitle>
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => setCurrentStation(station)}
+            >
+              <Play className="h-4 w-4" />
+              <span className="sr-only">Play {station.name}</span>
+            </Button>
+          </CardHeader>
+          <CardContent>
+            <p
+              className={`text-muted-foreground ${
+                isMobile ? "text-xs" : "text-sm"
+              }`}
+            >
+              {station.province}
+            </p>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
   );
 }

@@ -1,6 +1,4 @@
-import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "./ui/scroll-area";
 
 const provinces = [
   "Koshi Province",
@@ -31,7 +29,6 @@ export function CategoriesSection({ selectedProvince, setSelectedProvince }) {
   return (
     <div className="mb-6">
       <h2 className="text-3xl font-bold mb-6 mx-2">Listen by Provinces</h2>
-      <ScrollArea className="h-[80vh] w-full pr-2">
       <div className=" sticky top-4 grid grid-cols-1 sm:grid-cols-2 gap-4 m-2 mb-6">
         {provinces.map((province, index) => (
           <Card
@@ -49,7 +46,9 @@ export function CategoriesSection({ selectedProvince, setSelectedProvince }) {
                   className="w-44 h-auto object-cover mb-2 rounded"
                 />
               </div>
-              <h3 className="font-bold text-gray-900 text-sm mb-1">{province}</h3>
+              <h3 className="font-bold text-gray-900 text-sm mb-1">
+                {province}
+              </h3>
               <p className="text-xs text-gray-600">
                 {getStationCount(province)} FM Stations
               </p>
@@ -57,8 +56,6 @@ export function CategoriesSection({ selectedProvince, setSelectedProvince }) {
           </Card>
         ))}
       </div>
-</ScrollArea>
-
     </div>
   );
 }

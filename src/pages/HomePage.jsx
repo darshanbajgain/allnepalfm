@@ -1,8 +1,16 @@
-import { useState, useRef } from "react";
-import Layout from "@/Layouts/Layout";
+import { useRef } from "react";
 import SearchBar from "@/components/SearchBar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@components/ui/select";
 import StationList from "@/components/StationList";
-import { CategoriesSection } from "@/components/categories";
+import useSearchStore from "@/store/searchStore";
+import Layout from "@/layouts/Layout";
+import CategoriesSection from "@/components/CategoreisSection";
 
 const provinces = [
   "All",
@@ -16,10 +24,8 @@ const provinces = [
 ];
 
 export default function HomePage() {
-  const [selectedProvince, setSelectedProvince] = useState("All");
-  const [searchTerm, setSearchTerm] = useState("");
   const stationListRef = useRef(null);
-
+  const { selectedProvince, setSelectedProvince } = useSearchStore();
   const handleProvinceSelect = (province) => {
     setSelectedProvince(province);
     if (stationListRef.current) {
@@ -37,18 +43,26 @@ export default function HomePage() {
         className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 py-6 min-h-[calc(100vh-theme(spacing.16))]"
       >
         <div className="order-1 lg:order-2">
-          <SearchBar
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            provinces={provinces}
-            selectedProvince={selectedProvince}
-            handleProvinceSelect={handleProvinceSelect}
-          />
+          <div className="mb-6 max-w-screen-sm flex flex-col sm:flex-row gap-4">
+            <SearchBar />
+            <Select
+              value={selectedProvince}
+              onValueChange={handleProvinceSelect}
+            >
+              <SelectTrigger className="w-full sm:w-[200px]">
+                <SelectValue placeholder="Filter by Province" />
+              </SelectTrigger>
+              <SelectContent>
+                {provinces.map((province) => (
+                  <SelectItem key={province} value={province}>
+                    {province}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <div className="mt-4">
-            <StationList
-              selectedProvince={selectedProvince}
-              searchTerm={searchTerm}
-            />
+            <StationList />
           </div>
         </div>
         <div className="order-1 lg:order-2">

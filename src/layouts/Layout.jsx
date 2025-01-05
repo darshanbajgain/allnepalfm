@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useThemeStore } from "@/store/themeStore";
-import { AppSidebar } from "@/Layouts/Sidebar";
+import { AppSidebar } from "@/layouts/Sidebar";
 import Header from "@/components/Header";
-import Player from "@/components/Player";
 import MobileNavigation from "@/components/MobileNavigation";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Player from "@/components/Player";
 
 export default function Layout({ children }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -61,13 +61,15 @@ export default function Layout({ children }) {
                   </div>
                 </main>
               </ScrollArea>
-              <Player />
               {isMobile && (
                 <MobileNavigation
                   activeTab={activeTab}
                   onTabChange={handleTabChange}
                 />
               )}
+              <div>
+                <Player />
+              </div>
             </div>
           </div>
         </div>

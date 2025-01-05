@@ -20,7 +20,10 @@ const colors = [
   "bg-indigo-300 hover:bg-indigo-200",
 ];
 
-export function CategoriesSection({ selectedProvince, setSelectedProvince }) {
+export default function CategoriesSection({
+  selectedProvince,
+  setSelectedProvince,
+}) {
   // This is a mock function. In a real application, you'd fetch this data from your backend.
   const getStationCount = (province) => {
     return Math.floor(Math.random() * 50) + 10; // Returns a random number between 10 and 59

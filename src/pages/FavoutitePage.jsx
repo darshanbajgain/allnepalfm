@@ -1,4 +1,4 @@
-import Layout from "@/Layouts/Layout";
+import Layout from "@/layouts/Layout";
 
 const FavoutitePage = () => {
   return (

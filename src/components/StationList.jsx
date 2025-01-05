@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 import { Button } from "@components/ui/button";
 import { Play } from "lucide-react";
 import { usePlayerStore } from "@/store/playerStore";
+import useSearchStore from "@/store/searchStore";
 
 const dummyStations = [
   {
@@ -43,7 +44,8 @@ const dummyStations = [
   },
 ];
 
-export default function StationList({ selectedProvince, searchTerm }) {
+export default function StationList() {
+  const { searchTerm, selectedProvince } = useSearchStore();
   const { setStations, setCurrentStation } = usePlayerStore();
   const [isMobile, setIsMobile] = useState(false);
 
@@ -60,10 +62,10 @@ export default function StationList({ selectedProvince, searchTerm }) {
     setStations(dummyStations);
   }, [setStations]);
 
-  const filteredStations = dummyStations.filter(
+  const filteredStations = dummyStations?.filter(
     (station) =>
       (selectedProvince === "All" || station.province === selectedProvince) &&
-      station.name.toLowerCase().includes(searchTerm.toLowerCase())
+      station.name.toLowerCase().includes(searchTerm?.toLowerCase())
   );
   return (
     <div

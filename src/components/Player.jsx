@@ -52,45 +52,71 @@ export default function Player() {
     setVolume(newVolume[0]);
   };
 
-  if (!currentStation) return null;
-
   return (
-    <Card className="fixed bottom-0 left-0 right-0 bg-card border-t border-border">
+    <Card className="bottom-0 right-0 max-w-full bg-card border-t border-border">
       <CardContent className="flex items-center justify-between py-2 px-4">
-        <div className="flex-1 mr-4">
-          <h3 className="text-sm font-semibold text-foreground truncate">
-            {currentStation.name}
-          </h3>
-          <p className="text-xs text-muted-foreground truncate">
-            {currentStation.province}
-          </p>
-        </div>
+        {currentStation ? (
+          <div className="flex-1 justify-center mr-4">
+            <h3 className="text-sm font-semibold text-foreground truncate">
+              {currentStation.name}
+            </h3>
+            <p className="text-xs text-muted-foreground truncate">
+              {currentStation.province}
+            </p>
+          </div>
+        ) : (
+          <div className="flex-1 justify-center mr-4">
+            <p className="text-xs text-muted-foreground truncate">
+              Click at the play icon in the station cards to listen FM online
+            </p>
+          </div>
+        )}
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="icon" onClick={previousStation}>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={previousStation}
+            disabled={!currentStation} // Disable if currentStation is present
+          >
             <SkipBack className="h-4 w-4 text-white" />
           </Button>
-          <Button variant="outline" size="icon" onClick={togglePlayPause}>
+          <Button
+            variant="outline"
+            size="icon"
+            disabled={!currentStation} // Disable if currentStation is present
+            onClick={togglePlayPause}
+          >
             {isPlaying ? (
               <Pause className="h-4 w-4 text-white" />
             ) : (
               <Play className="h-4 w-4 text-white" />
             )}
           </Button>
-          <Button variant="outline" size="icon" onClick={nextStation}>
+          <Button
+            variant="outline"
+            size="icon"
+            disabled={!currentStation} // Disable if currentStation is present
+            onClick={nextStation}
+          >
             <SkipForward className="h-4 w-4 text-white" />
           </Button>
         </div>
-        <div className="flex items-center space-x-2 ml-4">
-          <Volume2 className="h-4 w-4 text-white" />
-          <Slider
-            min={0}
-            max={1}
-            step={0.1}
-            value={[volume]}
-            onValueChange={handleVolumeChange}
-            className="w-24"
-          />
-        </div>
+        {currentStation && (
+          <div className="flex items-center space-x-2 ml-4">
+            <Volume2
+              disabled={!currentStation} // Disable if currentStation is present
+              className="h-4 w-4 text-white"
+            />
+            <Slider
+              min={0}
+              max={1}
+              step={0.1}
+              value={[volume]}
+              onValueChange={handleVolumeChange}
+              className="w-24"
+            />
+          </div>
+        )}
         <audio ref={audioRef} />
       </CardContent>
     </Card>

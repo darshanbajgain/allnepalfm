@@ -12,6 +12,8 @@ export default defineConfig({
       "@hooks": path.resolve(__dirname, "./src/hooks"), // Alias for hooks
       "@store": path.resolve(__dirname, "./src/store"), // Alias for store
       "@lib": path.resolve(__dirname, "./src/lib"), // Alias for utilities
+      "@pages": path.resolve(__dirname, "./src/pages"), // Alias for Pages
+      "@layouts": path.resolve(__dirname, "./src/layouts"), // Alias for Layouts
     },
   },
 });

@@ -38,8 +38,10 @@ export default function Layout({ children }) {
   }, [location]);
 
   const handleTabChange = (tabId, path) => {
-    setActiveTab(tabId);
-    navigate(path);
+    if (tabId === "all-stations" || tabId === "about") {
+      setActiveTab(tabId);
+      navigate(path);
+    }
   };
 
   return (

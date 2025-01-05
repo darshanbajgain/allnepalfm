@@ -4,51 +4,30 @@ import { Button } from "@components/ui/button";
 import { Play } from "lucide-react";
 import { usePlayerStore } from "@/store/playerStore";
 import useSearchStore from "@/store/searchStore";
-
-const dummyStations = [
-  {
-    id: 1,
-    name: "Radio Nepal",
-    province: "Bagmati Province",
-    url: "http://radionepal.gov.np/live/",
-  },
-  {
-    id: 2,
-    name: "Kantipur FM",
-    province: "Bagmati Province",
-    url: "https://radio-broadcast.ekantipur.com/stream",
-  },
-  {
-    id: 3,
-    name: "Radio Annapurna",
-    province: "Gandaki Province",
-    url: "http://streaming.softnep.net:8091/;stream.nsv&type=mp3",
-  },
-  {
-    id: 4,
-    name: "Ujyaalo 90 Network",
-    province: "Bagmati Province",
-    url: "http://stream.zeno.fm/h527zqpgxchvv",
-  },
-  {
-    id: 5,
-    name: "Radio Sarangi",
-    province: "Koshi Province",
-    url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
-  },
-  {
-    id: 6,
-    name: "Radio Lumbini",
-    province: "Lumbini Province",
-    url: "http://streaming.softnep.net:8065/;stream.nsv&type=mp3",
-  },
-];
+import axios from "@/mockApi";
+import Loader from "./Loader";
 
 export default function StationList() {
   const { searchTerm, selectedProvince } = useSearchStore();
-  const { setStations, setCurrentStation } = usePlayerStore();
+  const { setStations, setCurrentStation, stations } = usePlayerStore();
   const [isMobile, setIsMobile] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    const fetchStations = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("/stations"); // Mocked GET request
+        setStations(response.data);
+      } catch (error) {
+        console.error("Error fetching stations:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStations();
+  }, []);
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -58,15 +37,20 @@ export default function StationList() {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  useEffect(() => {
-    setStations(dummyStations);
-  }, [setStations]);
-
-  const filteredStations = dummyStations?.filter(
+  const filteredStations = stations?.filter(
     (station) =>
       (selectedProvince === "All" || station.province === selectedProvince) &&
-      station.name.toLowerCase().includes(searchTerm?.toLowerCase())
+      station.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-32">
+        <Loader className="text-primary h-12 w-12 border-4" />
+      </div>
+    );
+  if (filteredStations.length === 0) return <p>No stations found.</p>;
+
   return (
     <div
       className={`grid gap-4 m-2 mb-6 ${

@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 const useSearchStore = create((set) => ({
   searchTerm: "",
-  setSearchTerm: (terms) => set({ terms }),
+  setSearchTerm: (searchTerm) => set({ searchTerm }),
 
   selectedProvince: "All",
   setSelectedProvince: (selectedProvince) => set({ selectedProvince }),

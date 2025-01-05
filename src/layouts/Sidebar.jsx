@@ -37,6 +37,7 @@ export function AppSidebar({ activeTab, onTabChange }) {
               <SidebarMenuButton asChild isActive={activeTab === tab.id}>
                 <Button
                   variant="ghost"
+                  disabled={tab.id === "settings" || tab.id === "favorites"} // Disable if tabid is settings and fav
                   className={cn(
                     "w-full bg-transparent justify-start px-6 py-2 h-12 text-sm rounded-xl font-medium text-white hover:bg-white/10",
                     activeTab === tab.id && "bg-white/20"

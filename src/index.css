@@ -25,8 +25,8 @@
     --accent: 198 40% 40%; /* Muted teal for accents (#34788D) */
     --accent-foreground: 0 0% 100%; /* White for contrast */
 
-    --destructive: 0 65% 50%; /* Bright red (#DA0037) */
-    --destructive-foreground: 210 20% 95%; /* Light gray (#EDEFF1) */
+    --destructive: 0 84% 60%; /* Softer red (#EE6470) */
+    --destructive-foreground: 210 20% 98%; /* Very light gray (#FAFBFC) */
 
     --border: 210 10% 85%; /* Subtle gray (#D3D6DB) */
     --input: 210 20% 90%; /* Light input background (#E5E8EC) */
@@ -54,8 +54,8 @@
     --accent: 0 0% 27%; /* #444444 */
     --accent-foreground: 0 0% 93%; /* #EDEDED */
 
-    --destructive: 0 100% 50%; /* #DA0037 */
-    --destructive-foreground: 0 0% 93%; /* #EDEDED */
+    --destructive: 0 62% 30%; /* Darker red for dark mode (#7A1F1F) */
+    --destructive-foreground: 0 85% 90%; /* Light pink (#F9D1D1) */
 
     --border: 0 0% 27%; /* #444444 */
     --input: 0 0% 27%; /* #171717 */

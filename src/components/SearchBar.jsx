@@ -7,7 +7,7 @@ export default function SearchBar() {
     <Input
       type="text"
       placeholder="Search FM stations..."
-      value={searchTerm || ""}
+      value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
       className="flex-1"
     />

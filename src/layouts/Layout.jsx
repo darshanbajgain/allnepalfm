@@ -56,7 +56,7 @@ export default function Layout({ children }) {
           <div className="flex-1 min-w-0">
             <div className="flex flex-col h-screen">
               <Header isMobile={isMobile} activeTab={activeTab} />
-              <main className="flex-1 overflow-hidden">
+              <main className="flex-1 overflow-auto xl:overflow-hidden">
                 <div className="h-full w-full max-w-[1400px] mx-auto px-6">
                   {children}
                 </div>

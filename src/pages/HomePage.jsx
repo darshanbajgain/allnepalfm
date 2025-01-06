@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import {
   Select,
@@ -26,23 +26,39 @@ const provinces = [
 export default function HomePage() {
   const stationListRef = useRef(null);
   const { selectedProvince, setSelectedProvince } = useSearchStore();
+  const [isMobile, setIsMobile] = useState(false);
+
   const handleProvinceSelect = (province) => {
     setSelectedProvince(province);
-    if (stationListRef.current) {
+    if (stationListRef.current && !isMobile) {
       stationListRef.current.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
+    } else if (stationListRef.current && isMobile) {
+      stationListRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
     }
   };
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
 
   return (
     <Layout>
       <div
         ref={stationListRef}
-        className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 py-6 min-h-[calc(100vh-theme(spacing.16))]"
+        className="w-full grid grid-cols-1 xl:grid-cols-2 gap-8 py-6 min-h-[calc(100vh-theme(spacing.16))]"
       >
-        <div className="order-2 lg:order-1">
+        <div className="order-2 xl:order-1">
           <div className="mb-6 max-w-screen-sm flex flex-col sm:flex-row gap-4">
             <SearchBar />
             <Select
@@ -65,7 +81,7 @@ export default function HomePage() {
             <StationList />
           </div>
         </div>
-        <div className="order-1 lg:order-2">
+        <div className="order-1 xl:order-2">
           <CategoriesSection
             selectedProvince={selectedProvince}
             setSelectedProvince={handleProvinceSelect}

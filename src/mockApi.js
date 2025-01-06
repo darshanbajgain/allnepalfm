@@ -47,6 +47,24 @@ const stations = [
     province: "Sudurpashchim Province",
     url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
   },
+  {
+    id: 8,
+    name: "Sudurpashchim FM",
+    province: "Sudurpashchim Province",
+    url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
+  },
+  {
+    id: 9,
+    name: "Sudurpashchim FM",
+    province: "Sudurpashchim Province",
+    url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
+  },
+  {
+    id: 10,
+    name: "Sudurpashchim FM",
+    province: "Sudurpashchim Province",
+    url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
+  },
 ];
 
 // Utility function to calculate station counts

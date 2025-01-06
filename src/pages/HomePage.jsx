@@ -42,7 +42,7 @@ export default function HomePage() {
         ref={stationListRef}
         className="w-full grid grid-cols-1 lg:grid-cols-2 gap-8 py-6 min-h-[calc(100vh-theme(spacing.16))]"
       >
-        <div className="order-1 lg:order-2">
+        <div className="order-2 lg:order-1">
           <div className="mb-6 max-w-screen-sm flex flex-col sm:flex-row gap-4">
             <SearchBar />
             <Select

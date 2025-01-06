@@ -56,13 +56,11 @@ export default function Layout({ children }) {
           <div className="flex-1 min-w-0">
             <div className="flex flex-col h-screen">
               <Header isMobile={isMobile} activeTab={activeTab} />
-              <ScrollArea>
-                <main className="flex-1 overflow-auto">
-                  <div className="h-full w-full max-w-[1400px] mx-auto px-6">
-                    {children}
-                  </div>
-                </main>
-              </ScrollArea>
+              <main className="flex-1 overflow-hidden">
+                <div className="h-full w-full max-w-[1400px] mx-auto px-6">
+                  {children}
+                </div>
+              </main>
               {isMobile && (
                 <MobileNavigation
                   activeTab={activeTab}

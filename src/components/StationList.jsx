@@ -7,12 +7,14 @@ import useSearchStore from "@/store/searchStore";
 import axios from "@/mockApi";
 import Loader from "./Loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import useStationsStore from "@/store/stationsStore";
 
 export default function StationList() {
   const { searchTerm, selectedProvince } = useSearchStore();
   const { setStations, setCurrentStation, stations } = usePlayerStore();
   const [isMobile, setIsMobile] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { selectedFilter } = useStationsStore();
 
   useEffect(() => {
     const fetchStations = async () => {
@@ -20,6 +22,7 @@ export default function StationList() {
         setLoading(true);
         const response = await axios.get("/stations"); // Mocked GET request
         setStations(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching stations:", error);
       } finally {
@@ -39,11 +42,15 @@ export default function StationList() {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  const filteredStations = stations?.filter(
-    (station) =>
-      (selectedProvince === "All" || station.province === selectedProvince) &&
-      station.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
+  const filteredStations = stations?.filter((station) => {
+    const matchesProvince = selectedProvince === "All" || station.province === selectedProvince;
+    const matchesSearch = station.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesFilter = selectedFilter === 'all' || station.categories.includes(selectedFilter);
+
+    return matchesProvince && matchesSearch && matchesFilter;
+  });
+
 
   if (loading)
     return (
@@ -57,9 +64,8 @@ export default function StationList() {
   return (
     <ScrollArea className="h-[calc(100vh-225px)] rounded-2xl border-2">
       <div
-        className={`grid gap-4 p-4 ${
-          isMobile ? "grid-cols-1" : "md:grid-cols-1 lg:grid-cols-2"
-        }`}
+        className={`grid gap-4 p-4 ${isMobile ? "grid-cols-1" : "md:grid-cols-1 lg:grid-cols-2"
+          }`}
       >
         {filteredStations.map((station) => (
           <Card
@@ -83,9 +89,8 @@ export default function StationList() {
             </CardHeader>
             <CardContent>
               <p
-                className={`text-muted-foreground ${
-                  isMobile ? "text-xs" : "text-sm"
-                }`}
+                className={`text-muted-foreground ${isMobile ? "text-xs" : "text-sm"
+                  }`}
               >
                 {station.province}
               </p>

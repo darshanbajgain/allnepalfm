@@ -10,60 +10,51 @@ const stations = [
     name: "Radio Nepal",
     province: "Bagmati Province",
     url: "http://radionepal.gov.np/live/",
+    categories: ["popular", "music", "news"],
   },
   {
     id: 2,
     name: "Kantipur FM",
     province: "Bagmati Province",
     url: "https://radio-broadcast.ekantipur.com/stream",
+    categories: ["popular", "music", "news"],
   },
   {
     id: 3,
     name: "Radio Sarangi",
     province: "Koshi Province",
     url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
+    categories: ["music"],
+
   },
   {
     id: 4,
     name: "Radio Lumbini",
     province: "Lumbini Province",
     url: "http://streaming.softnep.net:8065/;stream.nsv&type=mp3",
+    categories: ["news"],
+
   },
   {
     id: 5,
     name: "Radio Annapurna",
     province: "Gandaki Province",
     url: "http://streaming.softnep.net:8091/;stream.nsv&type=mp3",
+    categories: ["news"],
   },
   {
     id: 6,
     name: "Radio Karnali",
     province: "Karnali Province",
     url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
+    categories: ["news"],
   },
   {
     id: 7,
     name: "Sudurpashchim FM",
     province: "Sudurpashchim Province",
     url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
-  },
-  {
-    id: 8,
-    name: "Sudurpashchim FM",
-    province: "Sudurpashchim Province",
-    url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
-  },
-  {
-    id: 9,
-    name: "Sudurpashchim FM",
-    province: "Sudurpashchim Province",
-    url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
-  },
-  {
-    id: 10,
-    name: "Sudurpashchim FM",
-    province: "Sudurpashchim Province",
-    url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
+    categories: ["news"],
   },
 ];
 

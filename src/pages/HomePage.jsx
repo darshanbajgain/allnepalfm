@@ -13,6 +13,8 @@ import Layout from "@/layouts/Layout";
 import CategoriesSection from "@/components/CategoreisSection";
 import { cn } from "@/lib/utils";
 import useStationsStore from "@/store/stationsStore";
+import Player from "@/components/Player";
+import Header from "@/components/Header";
 
 const provinces = [
   "All",
@@ -32,11 +34,11 @@ export default function HomePage() {
   const { selectedFilter, setSelectedFilter } = useStationsStore();
 
   const filters = [
-    { id: "all", label: "All Fm" },
-    { id: "popular", label: "Popular Fm" },
-    { id: "music", label: "Music" },
+    { id: "all", label: "All" },
+    { id: "popular", label: "Popular" },
+    // { id: "music", label: "Music" },
     { id: "news", label: "News" },
-    { id: "community", label: "Community" },
+    // { id: "community", label: "Community" },
   ]
 
   const handleProvinceSelect = (province) => {
@@ -66,43 +68,49 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <div className="w-full flex flex-col mt-4 items-start">
-        <div className="flex flex-wrap gap-2 justify-center mb-8 p-4">
-          {filters.map((filter) => (
-            <button
-              key={filter.id}
-              onClick={() => setSelectedFilter(filter.id)}
-              className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-colors",
-                "border border-gray-200 hover:bg-gray-100",
-                selectedFilter === filter.id
-                  ? "bg-gray-900 text-white hover:bg-gray-800 border-transparent"
-                  : "bg-white text-gray-700"
-              )}
-            >
-              {filter.label}
-            </button>
-          ))}
+      <div className="w-full relative flex flex-col mt-4 items-start p-4">
+        <div className="w-full flex flex-row justify-between gap-4 mb-8">
+          <div className="flex flex-row gap-2 justify-center">
+            {filters.map((filter) => (
+              <button
+                key={filter.id}
+                onClick={() => setSelectedFilter(filter.id)}
+                className={cn(
+                  "px-4 py-2 rounded-full text-sm font-medium transition-colors",
+                  "border border-gray-400 hover:bg-gray-200",
+                  selectedFilter === filter.id
+                    ? "bg-primary text-white hover:bg-primary/80 border-transparent"
+                    : "bg-white text-gray-700"
+                )}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+          <Header isMobile={isMobile} />
         </div>
         <div
           ref={stationListRef}
-          className="w-full flex flex-col gap-8 py-6 h-full"
+          className="w-full flex flex-col gap-2 py-6 h-full"
         >
-
-          <div className="w-full px-8 max-w-sm md:max-w-xl lg:max-w-7xl mx-auto">
-            <CategoriesSection
-              selectedProvince={selectedProvince}
-              setSelectedProvince={handleProvinceSelect}
-            />
-          </div>
-          <div className="w-full p-4">
+          <h1 className="text-sm xl:text-lg font-semibold mb-2">Listen by Province:</h1>
+          {
+            selectedFilter === "all" && <div className="w-full max-w-sm md:max-w-xl lg:max-w-7xl mx-auto">
+              <CategoriesSection
+                selectedProvince={selectedProvince}
+                setSelectedProvince={handleProvinceSelect}
+              />
+            </div>
+          }
+          <div className="w-full mt-2">
             <div className="mb-6 max-w-screen-sm flex flex-col sm:flex-row gap-4">
               <SearchBar />
               <Select
                 value={selectedProvince}
                 onValueChange={handleProvinceSelect}
+                className="text-xs xl:text-sm"
               >
-                <SelectTrigger className="w-full sm:w-[200px]">
+                <SelectTrigger className="w-full h-8 sm:h-10 sm:w-[200px] text-xs xl:text-sm">
                   <SelectValue placeholder="Filter by Province" />
                 </SelectTrigger>
                 <SelectContent>
@@ -119,6 +127,11 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+      </div>
+
+      <div className="w-full max-w-5xl mx-auto pb-4 z-50">
+        <Player />
       </div>
 
     </Layout>

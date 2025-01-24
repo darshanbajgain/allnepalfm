@@ -20,14 +20,14 @@ const tabs = [
 
 export function AppSidebar({ activeTab, onTabChange }) {
   return (
-    <Sidebar className="fixed h-full w-64 bg-primary text-white">
-      <SidebarHeader className="p-4">
-        <div className="flex items-center gap-2 px-4">
+    <Sidebar className="fixed h-full w-64 bg-primary p-4 text-white">
+      <SidebarHeader className="flex flex-col p-1 items-center mt-4">
+        <div className="flex items-center gap-2 mb-8">
           <AudioLines size={36} strokeWidth={2} className=" text-white font-bold" />
           <span className="text-lg font-semibold">Nepali Waves</span>
         </div>
       </SidebarHeader>
-      <SidebarContent className="container mt-4">
+      <SidebarContent className="p-6">
         <SidebarMenu className="space-y-2">
           {tabs.map((tab) => (
             <SidebarMenuItem key={tab.id}>
@@ -52,7 +52,7 @@ export function AppSidebar({ activeTab, onTabChange }) {
       <SidebarFooter className="mt-auto p-4 border-t">
         <Button
           variant="ghost"
-          className="w-full justify-start gap-3 h-11 px-4 font-normal hover:bg-gray-100"
+          className="w-full justify-start gap-3 h-11 px-4 font-normal"
           onClick={() => onTabChange?.("developer", "/developer")}
         >
           <User className="h-5 w-5" />

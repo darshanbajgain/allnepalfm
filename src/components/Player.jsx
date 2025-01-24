@@ -1,175 +1,148 @@
-import { useEffect, useRef, useState } from "react";
-import { Button } from "@components/ui/button";
-import { Card, CardContent } from "@components/ui/card";
-import {
-  Play,
-  Pause,
-  SkipBack,
-  SkipForward,
-  Volume2,
-  AlertCircle,
-  X,
-  CircleAlert,
-} from "lucide-react";
-import { Slider } from "@components/ui/slider";
-import { usePlayerStore } from "@/store/playerStore";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { useState } from "react"
+import { Button } from "@components/ui/button"
+import { Card, CardContent } from "@components/ui/card"
+import { X, Minimize2, Maximize2 } from "lucide-react"
+import { usePlayerStore } from "@/store/playerStore"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import AudioPlayer from 'react-h5-audio-player'
+import 'react-h5-audio-player/lib/styles.css'
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
 
 export default function Player() {
   const {
     stations,
     currentStationIndex,
     isPlaying,
-    volume,
     setIsPlaying,
-    setVolume,
     nextStation,
     previousStation,
-  } = usePlayerStore();
-  const audioRef = useRef(null);
+    showPlayer,
+    setShowPlayer,
+  } = usePlayerStore()
 
-  const currentStation = stations[currentStationIndex];
-  const [playbackError, setPlaybackError] = useState(null); // Track playback errors
-  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false)
+  const currentStation = stations[currentStationIndex]
+  const [playerInstance, setPlayerInstance] = useState(null)
+  const [error, setError] = useState(null)
 
-  useEffect(() => {
-    if (currentStation) {
-      setPlaybackError(null);
-      setIsErrorVisible(false);
-      audioRef.current.src = currentStation.url;
+  const handleMinimize = () => {
+    setIsMinimized(true)
+  }
 
-      if (isPlaying) {
-        audioRef.current.play().catch((error) => {
-          console.error("Playback failed:", error);
-          setPlaybackError(
-            "Unable to play this station. It might be temporarily offline."
-          );
-          setIsErrorVisible(true);
-        });
-      }
-    }
-  }, [currentStation, isPlaying]);
+  const handleMaximize = () => {
+    setIsMinimized(false)
+  }
 
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
+  const handleError = (e) => {
+    console.error("Audio Error:", e)
+    setError(`Can't play ${currentStation.name}. The stream might be offline or unavailable.`)
+  }
 
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current
-        .play()
-        .catch((error) => console.error("Playback failed", error));
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleVolumeChange = (newVolume) => {
-    setVolume(newVolume[0]);
-  };
-
-  const handleAudioError = () => {
-    console.error("Audio playback error");
-    setIsErrorVisible(true);
-    setIsPlaying(false);
-  };
-
-  const dismissError = () => {
-    setIsErrorVisible(false);
-  };
+  if (!showPlayer || !currentStation) return null
 
   return (
     <>
-      {isErrorVisible && playbackError && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 w-full max-w-md px-4 z-50 animate-in fade-in slide-in-from-bottom-4">
-          <Alert
-            variant="destructive"
-            className="relative bg-background border-destructive/50 text-destructive"
+      {/* Always render the audio player but conditionally show different UIs */}
+      <div className={isMinimized ? 'hidden' : 'block'}>
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-end justify-center sm:items-center p-4">
+          <div className="w-full max-w-3xl animate-in slide-in-from-bottom duration-300">
+            {error && (
+              <Alert variant="destructive" className="mb-4 bg-background">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
+            <Card className="bg-primary border-t border-border shadow-lg">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="h-12 w-12 rounded-lg">
+                      <AvatarImage src={currentStation.imageUrl} alt={currentStation.name} className="object-cover" />
+                      <AvatarFallback className="rounded-lg bg-primary-foreground/10 text-primary-foreground">
+                        {currentStation.name.slice(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h3 className="text-base font-medium text-primary-foreground">{currentStation.name}</h3>
+                      <p className="text-sm text-primary-foreground/80">{currentStation.frequency || "98.1 MHz"}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleMinimize}
+                      className="text-primary-foreground hover:text-primary-foreground/80 hover:bg-primary-foreground/10"
+                    >
+                      <Minimize2 className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setShowPlayer(false)}
+                      className="text-primary-foreground hover:text-primary-foreground/80 hover:bg-primary-foreground/10"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                <AudioPlayer
+                  ref={(player) => {
+                    if (player && !playerInstance) {
+                      setPlayerInstance(player)
+                    }
+                  }}
+                  autoPlay
+                  src={currentStation.url}
+                  showSkipControls
+                  onPlay={() => {
+                    setIsPlaying(true)
+                    setError(null)
+                  }}
+                  onPause={() => setIsPlaying(false)}
+                  onClickPrevious={previousStation}
+                  onClickNext={nextStation}
+                  onError={handleError}
+                  customStyles={{
+                    backgroundColor: 'transparent',
+                    primaryColor: '#ffffff',
+                  }}
+                  className="player-override"
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+
+      {/* Minimized player */}
+      {isMinimized && (
+        <div className="fixed bottom-4 right-2 z-50 p-2 bg-background shadow-lg rounded-lg flex items-center gap-3">
+          {error && (
+            <Alert variant="destructive" className="absolute right-2 bg-background bottom-full mb-2 w-[300px]">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          <Button
+            onClick={handleMaximize}
+            className="flex items-center gap-2"
           >
-            <CircleAlert className="h-4 w-4" />
-            <AlertTitle className="font-semibold">Playback Error</AlertTitle>
-            <AlertDescription className="text-sm">
-              {playbackError}
-            </AlertDescription>
-            <Button
-              className="bg-transparent absolute top-2 right-2 h-6 w-6 hover:bg-transparent"
-              onClick={dismissError}
-            >
-              <X className="h-2 w-2 text-red-500" />
-            </Button>
-          </Alert>
+            <Avatar className="h-8 w-8 rounded-lg">
+              <AvatarImage src={currentStation.imageUrl} alt={currentStation.name} className="object-cover" />
+              <AvatarFallback className="rounded-lg bg-primary-foreground/10 text-primary-foreground">
+                {currentStation.name.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="text-primary-foreground text-sm font-medium">
+              {currentStation.name}
+            </div>
+          </Button>
         </div>
       )}
-      <Card className="bottom-0 right-0 max-w-full bg-card border-t border-border">
-        <CardContent className="flex items-center justify-between py-2 px-4">
-          {currentStation ? (
-            <div className="flex-1 justify-center mr-4">
-              <h3 className="text-sm font-semibold text-foreground truncate">
-                {currentStation.name}
-              </h3>
-              <p className="text-xs text-muted-foreground truncate">
-                {currentStation.province}
-              </p>
-            </div>
-          ) : (
-            <div className="flex-1 justify-center mr-4">
-              <p className="text-xs text-muted-foreground truncate">
-                Click at the play icon in the station cards to listen FM online
-              </p>
-            </div>
-          )}
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={previousStation}
-              disabled={!currentStation} // Disable if currentStation is present
-            >
-              <SkipBack className="h-4 w-4 text-white" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              disabled={!currentStation} // Disable if currentStation is present
-              onClick={togglePlayPause}
-            >
-              {isPlaying ? (
-                <Pause className="h-4 w-4 text-white" />
-              ) : (
-                <Play className="h-4 w-4 text-white" />
-              )}
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              disabled={!currentStation} // Disable if currentStation is present
-              onClick={nextStation}
-            >
-              <SkipForward className="h-4 w-4 text-white" />
-            </Button>
-          </div>
-          {currentStation && (
-            <div className="flex items-center space-x-2 ml-4">
-              <Volume2
-                disabled={!currentStation} // Disable if currentStation is present
-                className="h-4 w-4 text-white"
-              />
-              <Slider
-                min={0}
-                max={1}
-                step={0.1}
-                value={[volume]}
-                onValueChange={handleVolumeChange}
-                className="w-24"
-              />
-            </div>
-          )}
-          <audio ref={audioRef} onError={handleAudioError} />
-        </CardContent>
-      </Card>
     </>
-  );
+  )
 }

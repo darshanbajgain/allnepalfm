@@ -9,7 +9,7 @@ export default function SearchBar() {
       placeholder="Search FM stations..."
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
-      className="flex-1"
+      className="flex-1 text-xs xl:text-sm h-8 sm:h-10"
     />
   );
 }

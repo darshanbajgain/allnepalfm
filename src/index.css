@@ -4,62 +4,101 @@
 
 @layer base {
   :root {
-    --background: 210 20% 95%; /* Light gray-white background (#EDEFF1) */
-    --foreground: 210 30% 20%; /* Deep teal-gray (#36454F) */
+    --background: 210 20% 95%;
+    /* Light gray-white background (#EDEFF1) */
+    --foreground: 210 30% 20%;
+    /* Deep teal-gray (#36454F) */
 
-    --card: 210 20% 95%; /* Matches background for subtle cards */
-    --card-foreground: 210 30% 20%; /* Deep teal-gray (#36454F) */
+    --card: 210 20% 95%;
+    /* Matches background for subtle cards */
+    --card-foreground: 210 30% 20%;
+    /* Deep teal-gray (#36454F) */
 
-    --popover: 210 20% 95%; /* Matches background for consistency */
-    --popover-foreground: 210 30% 20%; /* Deep teal-gray (#36454F) */
+    --popover: 210 20% 95%;
+    /* Matches background for consistency */
+    --popover-foreground: 210 30% 20%;
+    /* Deep teal-gray (#36454F) */
 
-    --primary: 198 55% 28%; /* #22577A */
-    --primary-foreground: 0 0% 100%; /* White for contrast */
+    --primary: 198 55% 28%;
+    /* #22577A */
+    --primary-foreground: 0 0% 100%;
+    /* White for contrast */
 
-    --secondary: 210 25% 80%; /* Softer teal-gray (#B9E2D7) */
-    --secondary-foreground: 210 30% 20%; /* Deep teal-gray (#36454F) */
+    --secondary: 210 25% 80%;
+    /* Softer teal-gray (#B9E2D7) */
+    --secondary-foreground: 210 30% 20%;
+    /* Deep teal-gray (#36454F) */
 
-    --muted: 210 15% 85%; /* Light gray-muted (#D8DEE2) */
-    --muted-foreground: 210 30% 20%; /* Deep teal-gray (#36454F) */
+    --muted: 210 15% 85%;
+    /* Light gray-muted (#D8DEE2) */
+    --muted-foreground: 210 30% 20%;
+    /* Deep teal-gray (#36454F) */
 
-    --accent: 198 40% 40%; /* Muted teal for accents (#34788D) */
-    --accent-foreground: 0 0% 100%; /* White for contrast */
+    --accent: 198 40% 40%;
+    /* Muted teal for accents (#34788D) */
+    --accent-foreground: 0 0% 100%;
+    /* White for contrast */
 
-    --destructive: 0 84% 60%; /* Softer red (#EE6470) */
-    --destructive-foreground: 210 20% 98%; /* Very light gray (#FAFBFC) */
+    --destructive: 0 84% 60%;
+    /* Softer red (#EE6470) */
+    --destructive-foreground: 210 20% 98%;
+    /* Very light gray (#FAFBFC) */
 
-    --border: 210 10% 85%; /* Subtle gray (#D3D6DB) */
-    --input: 210 20% 90%; /* Light input background (#E5E8EC) */
-    --ring: 198 55% 28%; /* Bold teal for focus (#22577A) */
+    --border: 210 10% 85%;
+    /* Subtle gray (#D3D6DB) */
+    --input: 210 20% 90%;
+    /* Light input background (#E5E8EC) */
+    --ring: 198 55% 28%;
+    /* Bold teal for focus (#22577A) */
   }
+
   .dark {
-    --background: 0 0% 9%; /* #171717 */
-    --foreground: 0 0% 93%; /* #EDEDED */
+    --background: 0 0% 9%;
+    /* #171717 */
+    --foreground: 0 0% 93%;
+    /* #EDEDED */
 
-    --card: 0 0% 9%; /* #171717 */
-    --card-foreground: 0 0% 93%; /* #EDEDED */
+    --card: 0 0% 9%;
+    /* #171717 */
+    --card-foreground: 0 0% 93%;
+    /* #EDEDED */
 
-    --popover: 0 0% 9%; /* #171717 */
-    --popover-foreground: 0 0% 93%; /* #EDEDED */
+    --popover: 0 0% 9%;
+    /* #171717 */
+    --popover-foreground: 0 0% 93%;
+    /* #EDEDED */
 
-    --primary: 0 0% 27%; /* #444444 */
-    --primary-foreground: 0 0% 93%; /* #EDEDED */
+    --primary: 0 0% 27%;
+    /* #444444 */
+    --primary-foreground: 0 0% 93%;
+    /* #EDEDED */
 
-    --secondary: 0 0% 27%; /* #444444 */
-    --secondary-foreground: 0 0% 93%; /* #EDEDED */
+    --secondary: 0 0% 27%;
+    /* #444444 */
+    --secondary-foreground: 0 0% 93%;
+    /* #EDEDED */
 
-    --muted: 0 0% 9%; /* #171717 */
-    --muted-foreground: 0 0% 93%; /* #EDEDED */
+    --muted: 0 0% 9%;
+    /* #171717 */
+    --muted-foreground: 0 0% 93%;
+    /* #EDEDED */
 
-    --accent: 0 0% 27%; /* #444444 */
-    --accent-foreground: 0 0% 93%; /* #EDEDED */
+    --accent: 0 0% 27%;
+    /* #444444 */
+    --accent-foreground: 0 0% 93%;
+    /* #EDEDED */
 
-    --destructive: 0 62% 30%; /* Darker red for dark mode (#7A1F1F) */
-    --destructive-foreground: 0 85% 90%; /* Light pink (#F9D1D1) */
+    --destructive: 0 62% 30%;
+    /* Darker red for dark mode (#7A1F1F) */
+    --destructive-foreground: 0 85% 90%;
+    /* Light pink (#F9D1D1) */
 
-    --border: 0 0% 27%; /* #444444 */
-    --input: 0 0% 27%; /* #171717 */
-    --ring: 0 0% 27%; /* #444444 */
+    --border: 0 0% 27%;
+    /* #444444 */
+    --input: 0 0% 27%;
+    /* #171717 */
+    --ring: 0 0% 27%;
+    /* #444444 */
   }
 }
 
@@ -67,9 +106,44 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
 
+/* Custom styles for the audio player */
+.player-override.rhap_container {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.player-override .rhap_main-controls-button,
+.player-override .rhap_volume-button,
+.player-override .rhap_time {
+  color: white;
+}
+
+.player-override .rhap_progress-filled,
+.player-override .rhap_progress-indicator {
+  background-color: white;
+}
+
+.player-override .rhap_progress-bar,
+.player-override .rhap_volume-bar {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.player-override .rhap_volume-indicator {
+  background: white;
+}
+
+.player-override .rhap_progress-section {
+  display: none;
+}
+
+.player-override .rhap_controls-section {
+  margin-top: 0;
+}

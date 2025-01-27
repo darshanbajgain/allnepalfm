@@ -4,24 +4,19 @@
 
 @layer base {
   :root {
-    --background: 210 20% 95%;
-    /* Light gray-white background (#EDEFF1) */
-    --foreground: 210 30% 20%;
-    /* Deep teal-gray (#36454F) */
+    --background: 0 0% 96%;
 
-    --card: 210 20% 95%;
+    --card: 0 0% 91%;
     /* Matches background for subtle cards */
-    --card-foreground: 210 30% 20%;
-    /* Deep teal-gray (#36454F) */
 
     --popover: 210 20% 95%;
     /* Matches background for consistency */
     --popover-foreground: 210 30% 20%;
     /* Deep teal-gray (#36454F) */
 
-    --primary: 198 55% 28%;
+    --primary: 217 89% 61%;
     /* #22577A */
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 214 93% 51%;
     /* White for contrast */
 
     --secondary: 210 25% 80%;
@@ -29,9 +24,9 @@
     --secondary-foreground: 210 30% 20%;
     /* Deep teal-gray (#36454F) */
 
-    --muted: 210 15% 85%;
+    --muted: 0 0 20%;
     /* Light gray-muted (#D8DEE2) */
-    --muted-foreground: 210 30% 20%;
+    --muted-foreground: 0 0 40%;
     /* Deep teal-gray (#36454F) */
 
     --accent: 198 40% 40%;
@@ -44,7 +39,7 @@
     --destructive-foreground: 210 20% 98%;
     /* Very light gray (#FAFBFC) */
 
-    --border: 210 10% 85%;
+    --border: 0 0 40%;
     /* Subtle gray (#D3D6DB) */
     --input: 210 20% 90%;
     /* Light input background (#E5E8EC) */
@@ -54,14 +49,9 @@
 
   .dark {
     --background: 0 0% 9%;
-    /* #171717 */
-    --foreground: 0 0% 93%;
-    /* #EDEDED */
 
     --card: 0 0% 9%;
     /* #171717 */
-    --card-foreground: 0 0% 93%;
-    /* #EDEDED */
 
     --popover: 0 0% 9%;
     /* #171717 */
@@ -99,6 +89,10 @@
     /* #171717 */
     --ring: 0 0% 27%;
     /* #444444 */
+  }
+
+  html {
+    font-family: Inter, system-ui, sans-serif;
   }
 }
 

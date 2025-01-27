@@ -54,19 +54,19 @@ export default function Player() {
               </Alert>
             )}
 
-            <Card className="bg-primary border-t border-border shadow-lg">
+            <Card className="bg-border border-t border-border/20 shadow-lg">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <Avatar className="h-12 w-12 rounded-lg">
                       <AvatarImage src={currentStation.imageUrl} alt={currentStation.name} className="object-cover" />
-                      <AvatarFallback className="rounded-lg bg-primary-foreground/10 text-primary-foreground">
+                      <AvatarFallback className="rounded-lg bg-border/30 text-white">
                         {currentStation.name.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <h3 className="text-base font-medium text-primary-foreground">{currentStation.name}</h3>
-                      <p className="text-sm text-primary-foreground/80">{currentStation.frequency || "98.1 MHz"}</p>
+                      <h3 className="text-base font-medium text-white">{currentStation.name}</h3>
+                      <p className="text-sm text-white">{currentStation.frequency || "98.1 MHz"}</p>
                     </div>
                   </div>
                   <div className="flex gap-2">
@@ -74,7 +74,7 @@ export default function Player() {
                       variant="ghost"
                       size="icon"
                       onClick={handleMinimize}
-                      className="text-primary-foreground hover:text-primary-foreground/80 hover:bg-primary-foreground/10"
+                      className="text-white  hover:bg-card-foreground/10"
                     >
                       <Minimize2 className="h-4 w-4" />
                     </Button>
@@ -82,7 +82,7 @@ export default function Player() {
                       variant="ghost"
                       size="icon"
                       onClick={() => setShowPlayer(false)}
-                      className="text-primary-foreground hover:text-primary-foreground/80 hover:bg-primary-foreground/10"
+                      className="text-white hover:text-white hover:bg-card-foreground/10"
                     >
                       <X className="h-4 w-4" />
                     </Button>
@@ -133,7 +133,7 @@ export default function Player() {
           >
             <Avatar className="h-8 w-8 rounded-lg">
               <AvatarImage src={currentStation.imageUrl} alt={currentStation.name} className="object-cover" />
-              <AvatarFallback className="rounded-lg bg-primary-foreground/10 text-primary-foreground">
+              <AvatarFallback className="rounded-lg bg-card-foreground/10 text-primary-foreground">
                 {currentStation.name.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>

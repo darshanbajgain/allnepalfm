@@ -76,18 +76,18 @@ export default function HomePage() {
                 key={filter.id}
                 onClick={() => setSelectedFilter(filter.id)}
                 className={cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-colors",
-                  "border border-gray-400 hover:bg-gray-200",
+                  "px-4 py-2 rounded-full text-xs font-normal transition-colors",
+                  "border border-border tracking-widest hover:bg-border/20",
                   selectedFilter === filter.id
-                    ? "bg-primary text-white hover:bg-primary/80 border-transparent"
-                    : "bg-white text-gray-700"
+                    ? "bg-border text-white  hover:bg-border/80 border-transparent"
+                    : "bg-white text-border"
                 )}
               >
                 {filter.label}
               </button>
             ))}
           </div>
-          <Header isMobile={isMobile} />
+          {/* <Header isMobile={isMobile} /> */}
         </div>
         <div
           ref={stationListRef}
@@ -108,7 +108,7 @@ export default function HomePage() {
               <Select
                 value={selectedProvince}
                 onValueChange={handleProvinceSelect}
-                className="text-xs xl:text-sm"
+                className="text-xs xl:text-sm ring-border focus:outline-border focus:ring-border"
               >
                 <SelectTrigger className="w-full h-8 sm:h-10 sm:w-[200px] text-xs xl:text-sm">
                   <SelectValue placeholder="Filter by Province" />

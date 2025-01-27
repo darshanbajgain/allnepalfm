@@ -60,8 +60,8 @@ export default function CategoriesSection({
 
                     <Card
                       className={cn(
-                        "overflow-hidden rounded-xl cursor-pointer transition-all duration-300",
-                        "hover:shadow-lg relative bg-background",
+                        "overflow-hidden rounded-xl border-border/30 cursor-pointer transition-all duration-300",
+                        "hover:shadow-sm relative bg-background",
                         "group-hover:translate-y-[-2px]",
                         selectedProvince === province.name && "ring-2 ring-primary opacity-100"
 
@@ -90,8 +90,8 @@ export default function CategoriesSection({
             ))
             }
           </CarouselContent>
-          <CarouselPrevious className="flex text-white -left-4 sm:-left-4" />
-          <CarouselNext className="flex text-white -right-4 sm:-right-4" />
+          <CarouselPrevious className="flex bg-border text-white  hover:bg-border/80 border-border -left-4 sm:-left-4" />
+          <CarouselNext className="flex bg-border text-white  hover:bg-border/80 border-border -right-4 sm:-right-4" />
         </Carousel>
       )}
     </div>

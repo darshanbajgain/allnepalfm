@@ -7,44 +7,28 @@
     --background: 0 0% 96%;
 
     --card: 0 0% 91%;
-    /* Matches background for subtle cards */
 
     --popover: 210 20% 95%;
-    /* Matches background for consistency */
     --popover-foreground: 210 30% 20%;
-    /* Deep teal-gray (#36454F) */
 
     --primary: 217 89% 61%;
-    /* #22577A */
     --primary-foreground: 214 93% 51%;
-    /* White for contrast */
 
     --secondary: 210 25% 80%;
-    /* Softer teal-gray (#B9E2D7) */
     --secondary-foreground: 210 30% 20%;
-    /* Deep teal-gray (#36454F) */
 
     --muted: 0 0 20%;
-    /* Light gray-muted (#D8DEE2) */
     --muted-foreground: 0 0 40%;
-    /* Deep teal-gray (#36454F) */
 
     --accent: 198 40% 40%;
-    /* Muted teal for accents (#34788D) */
     --accent-foreground: 0 0% 100%;
-    /* White for contrast */
 
     --destructive: 0 84% 60%;
-    /* Softer red (#EE6470) */
     --destructive-foreground: 210 20% 98%;
-    /* Very light gray (#FAFBFC) */
 
     --border: 0 0 40%;
-    /* Subtle gray (#D3D6DB) */
     --input: 210 20% 90%;
-    /* Light input background (#E5E8EC) */
     --ring: 198 55% 28%;
-    /* Bold teal for focus (#22577A) */
   }
 
   .dark {
@@ -105,7 +89,6 @@
     @apply bg-background text-foreground;
   }
 }
-
 
 /* Custom styles for the audio player */
 .player-override.rhap_container {

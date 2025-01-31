@@ -9,8 +9,10 @@ const stations = [
     id: 1,
     name: "Radio Nepal",
     province: "Bagmati Province",
-    url: "http://radionepal.gov.np/live/",
+    url: "https://stream1.radionepal.gov.np/live/?play",
     categories: ["popular", "music", "news"],
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgIkj8j9CkJV_pCmaFDsv3bpMfWdFgE4S5g&s",
+    frequency: "100 MHz",
   },
   {
     id: 2,
@@ -18,6 +20,8 @@ const stations = [
     province: "Bagmati Province",
     url: "https://radio-broadcast.ekantipur.com/stream",
     categories: ["popular", "music", "news"],
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu4clGkf4E3n_LEL-vyTCOC_xSRcguZU5pCA&s",
+    frequency: "96.1 MHz",
   },
   {
     id: 3,
@@ -25,36 +29,27 @@ const stations = [
     province: "Koshi Province",
     url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
     categories: ["music"],
-
+    frequency: "101.3 MHz",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ68DS0RdPmlU6ABkdW7thOFyDjyb6THALmX5g_Cr-iPjN-86v_-sUKDj8dmeg9WRjzpuo&usqp=CAU",
   },
   {
     id: 4,
-    name: "Radio Lumbini",
-    province: "Lumbini Province",
-    url: "http://streaming.softnep.net:8065/;stream.nsv&type=mp3",
+    name: "Ujyaalo 90 Netwrok",
+    province: "Bagmati Province",
+    url: "https://stream-147.zeno.fm/wtuvp08xq1duv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiJ3dHV2cDA4eHExZHV2IiwiaG9zdCI6InN0cmVhbS0xNDcuemVuby5mbSIsInJ0dGwiOjUsImp0aSI6ImZ2N09wVHhkUmItRncyX0h2bjlKVHciLCJpYXQiOjE3MzgzMzU5MjgsImV4cCI6MTczODMzNTk4OH0.hyY3k94h6F4RMkV1F_pEoVNu5EQI_aFQcGXRXK3RuYI",
     categories: ["news"],
-
+    frequency: "90 MHz",
+    img: "https://unncdn.prixacdn.net/static/frontend/img/logo.png",
   },
+
   {
     id: 5,
-    name: "Radio Annapurna",
-    province: "Gandaki Province",
-    url: "http://streaming.softnep.net:8091/;stream.nsv&type=mp3",
-    categories: ["news"],
-  },
-  {
-    id: 6,
-    name: "Radio Karnali",
-    province: "Karnali Province",
-    url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
-    categories: ["news"],
-  },
-  {
-    id: 7,
-    name: "Sudurpashchim FM",
-    province: "Sudurpashchim Province",
-    url: "http://streaming.softnep.net:8037/;stream.nsv&type=mp3",
-    categories: ["news"],
+    name: "Radio Vision",
+    province: "Koshi Province",
+    url: "https://live.itech.host:3765/stream",
+    categories: ["news", "music"],
+    frequency: "91.6 MHz",
+    img: "https://images.hamro-files.com/iZMMi5Jpe0c2c_QIQ3hxEfb6Bls=/500x500/https://sgp1.digitaloceanspaces.com/everestdb/hamropatro-backend/radio/bd20e093-874b-4fa7-b75f-fdafc35dea07",
   },
 ];
 

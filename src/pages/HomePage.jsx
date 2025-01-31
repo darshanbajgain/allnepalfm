@@ -43,17 +43,17 @@ export default function HomePage() {
 
   const handleProvinceSelect = (province) => {
     setSelectedProvince(province);
-    if (stationListRef.current && !isMobile) {
-      stationListRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    } else if (stationListRef.current && isMobile) {
-      stationListRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-      });
-    }
+    // if (stationListRef.current && !isMobile) {
+    //   stationListRef.current.scrollIntoView({
+    //     behavior: "smooth",
+    //     block: "start",
+    //   });
+    // } else if (stationListRef.current && isMobile) {
+    //   stationListRef.current.scrollIntoView({
+    //     behavior: "smooth",
+    //     block: "end",
+    //   });
+    // }
   };
 
   useEffect(() => {

@@ -61,7 +61,7 @@ export default function CategoriesSection({
                     <Card
                       className={cn(
                         "overflow-hidden rounded-xl border-border/30 cursor-pointer transition-all duration-300",
-                        "hover:shadow-sm relative bg-background",
+                        "hover:shadow-sm relative",
                         "group-hover:translate-y-[-2px]",
                         selectedProvince === province.name && "ring-2 ring-primary opacity-100"
 

@@ -3,8 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useThemeStore } from "@/store/themeStore";
 import { AppSidebar } from "@/layouts/Sidebar";
 import MobileNavigation from "@/components/MobileNavigation";
-import { SidebarProvider } from "@/components/ui/sidebar";
-
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 export default function Layout({ children }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -43,17 +42,16 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen">
       <SidebarProvider>
         <div className="flex w-full">
           {!isMobile && (
-            <div className="hidden lg:block w-64 flex-shrink-0">
+            <div className="hidden lg:block w-64 flex-shrink-0 bg-sidebar">
               <AppSidebar activeTab={activeTab} onTabChange={handleTabChange} />
             </div>
           )}
-          <div className="flex-1 min-w-0">
-            <div className="flex flex-col">
-              {/* <Header isMobile={isMobile} activeTab={activeTab} /> */}
+          <SidebarInset className="flex-1 min-w-0 bg-background">
+            <div className="flex flex-col h-full">
               <main className="flex-1 overflow-auto h-screen xl:overflow-hidden">
                 <div className="h-full w-full max-w-[1400px] mx-auto px-2 md:px-4 xl:px-6 mb-8">
                   {children}
@@ -65,9 +63,8 @@ export default function Layout({ children }) {
                   onTabChange={handleTabChange}
                 />
               )}
-
             </div>
-          </div>
+          </SidebarInset>
         </div>
       </SidebarProvider>
     </div>

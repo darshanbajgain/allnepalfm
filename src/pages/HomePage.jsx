@@ -39,7 +39,7 @@ export default function HomePage() {
     // { id: "music", label: "Music" },
     { id: "news", label: "News" },
     // { id: "community", label: "Community" },
-  ]
+  ];
 
   const handleProvinceSelect = (province) => {
     setSelectedProvince(province);
@@ -65,7 +65,6 @@ export default function HomePage() {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-
   return (
     <Layout>
       <div className="w-full relative flex flex-col mt-4 items-start p-4">
@@ -76,32 +75,33 @@ export default function HomePage() {
                 key={filter.id}
                 onClick={() => setSelectedFilter(filter.id)}
                 className={cn(
-                  "px-4 py-2 rounded-full text-xs font-normal transition-colors",
-                  "border border-border tracking-widest hover:bg-border/20",
+                  "px-4 py-2 rounded-full text-xs font-normal transition-all duration-200",
+                  "border border-border tracking-widest",
                   selectedFilter === filter.id
-                    ? "bg-border text-white  hover:bg-border/80 border-transparent"
-                    : "bg-white text-border"
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                    : "bg-background text-foreground hover:bg-primary/10"
                 )}
               >
                 {filter.label}
               </button>
             ))}
           </div>
-          {/* <Header isMobile={isMobile} /> */}
         </div>
         <div
           ref={stationListRef}
           className="w-full flex flex-col gap-2 py-6 h-full"
         >
-          <h1 className="text-sm xl:text-lg font-semibold mb-2">Listen by Province:</h1>
-          {
-            selectedFilter === "all" && <div className="w-full max-w-sm md:max-w-xl lg:max-w-7xl mx-auto">
+          <h1 className="text-sm xl:text-lg font-semibold mb-2">
+            Listen by Province:
+          </h1>
+          {selectedFilter === "all" && (
+            <div className="w-full max-w-sm md:max-w-xl lg:max-w-7xl mx-auto">
               <CategoriesSection
                 selectedProvince={selectedProvince}
                 setSelectedProvince={handleProvinceSelect}
               />
             </div>
-          }
+          )}
           <div className="w-full mt-2">
             <div className="mb-6 max-w-screen-sm flex flex-col sm:flex-row gap-4">
               <SearchBar />
@@ -127,13 +127,11 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-
       </div>
 
       <div className="w-full max-w-5xl mx-auto pb-4 z-50">
         <Player />
       </div>
-
     </Layout>
   );
 }

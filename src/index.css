@@ -4,79 +4,37 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96%;
+    --background: 147 30% 10%; /* Darker green for depth */
+    --sidebar: 147 35% 8%; /* More contrast */
+    --card: 147 30% 14%; /* Deeper for readability */
+    --popover: 147 28% 12%; /* More contrast */
+    --popover-foreground: 0 0% 100%;
 
-    --card: 0 0% 91%;
+    --primary: 285 100% 70%; /* Brighter purple */
+    --primary-foreground: 0 0% 100%;
 
-    --popover: 210 20% 95%;
-    --popover-foreground: 210 30% 20%;
+    --secondary: 147 45% 26%; /* More vivid */
+    --secondary-foreground: 0 0% 100%;
 
-    --primary: 217 89% 61%;
-    --primary-foreground: 214 93% 51%;
+    --muted: 147 20% 18%;
+    --muted-foreground: 0 0% 80%; /* Improved readability */
 
-    --secondary: 210 25% 80%;
-    --secondary-foreground: 210 30% 20%;
-
-    --muted: 0 0 20%;
-    --muted-foreground: 0 0 40%;
-
-    --accent: 198 40% 40%;
+    --accent: 285 90% 65%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0 40%;
-    --input: 210 20% 90%;
-    --ring: 198 55% 28%;
-  }
+    --border: 147 25% 22%; /* Slightly brighter */
+    --input: 147 25% 20%; /* Better contrast */
+    --ring: 285 100% 70%; /* Matches primary */
 
-  .dark {
-    --background: 0 0% 9%;
-
-    --card: 0 0% 9%;
-    /* #171717 */
-
-    --popover: 0 0% 9%;
-    /* #171717 */
-    --popover-foreground: 0 0% 93%;
-    /* #EDEDED */
-
-    --primary: 0 0% 27%;
-    /* #444444 */
-    --primary-foreground: 0 0% 93%;
-    /* #EDEDED */
-
-    --secondary: 0 0% 27%;
-    /* #444444 */
-    --secondary-foreground: 0 0% 93%;
-    /* #EDEDED */
-
-    --muted: 0 0% 9%;
-    /* #171717 */
-    --muted-foreground: 0 0% 93%;
-    /* #EDEDED */
-
-    --accent: 0 0% 27%;
-    /* #444444 */
-    --accent-foreground: 0 0% 93%;
-    /* #EDEDED */
-
-    --destructive: 0 62% 30%;
-    /* Darker red for dark mode (#7A1F1F) */
-    --destructive-foreground: 0 85% 90%;
-    /* Light pink (#F9D1D1) */
-
-    --border: 0 0% 27%;
-    /* #444444 */
-    --input: 0 0% 27%;
-    /* #171717 */
-    --ring: 0 0% 27%;
-    /* #444444 */
+    --foreground: 0 0% 98%;
   }
 
   html {
     font-family: Inter, system-ui, sans-serif;
+    @apply scroll-smooth; /* Smooth scrolling */
   }
 }
 
@@ -90,7 +48,7 @@
   }
 }
 
-/* Custom styles for the audio player */
+/* 🎧 Custom styles for the audio player */
 .player-override.rhap_container {
   background-color: transparent;
   box-shadow: none;
@@ -100,17 +58,17 @@
 .player-override .rhap_main-controls-button,
 .player-override .rhap_volume-button,
 .player-override .rhap_time {
-  color: white;
+  @apply text-white transition-opacity opacity-80 hover:opacity-100;
 }
 
 .player-override .rhap_progress-filled,
 .player-override .rhap_progress-indicator {
-  background-color: white;
+  background-color: #fff; /* White progress bar */
 }
 
 .player-override .rhap_progress-bar,
 .player-override .rhap_volume-bar {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.2); /* Subtle background */
 }
 
 .player-override .rhap_volume-indicator {
@@ -122,5 +80,25 @@
 }
 
 .player-override .rhap_controls-section {
-  margin-top: 0;
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* 🚀 Glassmorphism Effect */
+@layer utilities {
+  .glass-effect {
+    @apply bg-clip-padding backdrop-filter backdrop-blur-md;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* ✨ Hover and Focus Effects */
+@layer utilities {
+  .btn-hover {
+    @apply transition-all duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg;
+  }
+
+  .input-focus {
+    @apply focus:ring-2 focus:ring-primary focus:outline-none;
+  }
 }

@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
-import { X, Minimize2 } from "lucide-react";
+import { X, Minimize2, GripVertical } from "lucide-react";
 import { usePlayerStore } from "@/store/playerStore";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { CustomAudioPlayer } from "./CustomAudioPlayer";
+import Draggable from "react-draggable"; // Import Draggable
 
 export default function Player() {
   const {
@@ -20,15 +21,35 @@ export default function Player() {
   } = usePlayerStore();
 
   const [isMinimized, setIsMinimized] = useState(false);
-  const currentStation = stations[currentStationIndex];
   const [error, setError] = useState(null);
+  const currentStation = stations[currentStationIndex];
+  const [isDragging, setIsDragging] = useState(false);
+
+  // Load position from localStorage
+  const getSavedPosition = () => {
+    if (typeof window !== "undefined") {
+      const savedPos = localStorage.getItem("playerPosition");
+      return savedPos
+        ? JSON.parse(savedPos)
+        : { x: 20, y: window.innerHeight - 100 }; // Start at bottom-left
+    }
+    return { x: 20, y: window.innerHeight - 100 };
+  };
+
+  const [position, setPosition] = useState(getSavedPosition());
+
+  useEffect(() => {
+    setError(null); // Clear error when station changes
+  }, [currentStation]);
 
   const handleMinimize = () => {
     setIsMinimized(true);
   };
 
-  const handleMaximize = () => {
-    setIsMinimized(false);
+  const handleMaximize = (e) => {
+    if (!isDragging) {
+      setIsMinimized(false);
+    }
   };
 
   const handleError = (e) => {
@@ -38,13 +59,20 @@ export default function Player() {
     );
   };
 
-  useEffect(() => {
-    // Clear error when changing stations
-    setError(null);
-  }, [currentStation]); // Updated dependency
+  // Save position on drag stop
+  const handleDragStart = () => setIsDragging(true);
+  const handleDragStop = (e, data) => {
+    setIsDragging(false);
+    setPosition({ x: data.x, y: data.y });
+    localStorage.setItem(
+      "playerPosition",
+      JSON.stringify({ x: data.x, y: data.y })
+    );
+  };
 
   if (!showPlayer || !currentStation) return null;
 
+  if (!showPlayer || !currentStation) return null;
   return (
     <>
       <div className={isMinimized ? "hidden" : "block"}>
@@ -120,38 +148,59 @@ export default function Player() {
         </div>
       </div>
 
+      {/* Draggable Minimized Player */}
       {isMinimized && (
-        <div className="fixed bottom-4 right-4 z-50 p-3 bg-[#0A0B1E] shadow-lg rounded-lg flex items-center gap-4">
-          {error && (
-            <Alert
-              variant="destructive"
-              className="absolute right-0 bg-red-900/50 border-red-500 text-white bottom-full mb-2 w-[300px]"
-            >
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-          <button
-            onClick={handleMaximize}
-            className="flex items-center gap-3 text-white"
+        <div className="fixed inset-0 z-50 pointer-events-none">
+          <Draggable
+            bounds="parent" // Ensure dragging stays inside viewport
+            defaultPosition={position} // Set the initial position
+            onStart={handleDragStart}
+            onStop={handleDragStop} // Save position when dragging stops
           >
-            <Avatar className="h-10 w-10 rounded-sm">
-              <AvatarImage
-                src={currentStation.img}
-                alt={currentStation.name}
-                className="object-cover"
-              />
-              <AvatarFallback className="rounded-sm bg-primary/20 text-primary">
-                {currentStation.name.slice(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col">
-              <span className="text-sm font-medium">{currentStation.name}</span>
-              <span className="text-xs text-white/60">
-                {currentStation.frequency || "98.1 MHz"}
-              </span>
+            <div className="absolute p-3 bg-[#0A0B1E] shadow-lg rounded-lg flex items-center gap-4 cursor-move pointer-events-auto">
+              {error && (
+                <Alert
+                  variant="destructive"
+                  className="absolute right-0 bg-red-900/50 border-red-500 text-white bottom-full mb-2 w-[300px]"
+                >
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+
+              {/* Drag Handle */}
+              <div
+                className="cursor-grab active:cursor-grabbing text-white/50 hover:text-white"
+                title="Drag"
+              >
+                <GripVertical className="h-5 w-5" />
+              </div>
+
+              <button
+                onClick={handleMaximize}
+                className="flex items-center gap-3 text-white"
+              >
+                <Avatar className="h-10 w-10 rounded-sm">
+                  <AvatarImage
+                    src={currentStation.img}
+                    alt={currentStation.name}
+                    className="object-cover"
+                  />
+                  <AvatarFallback className="rounded-sm bg-primary/20 text-primary">
+                    {currentStation.name.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium">
+                    {currentStation.name}
+                  </span>
+                  <span className="text-xs text-white/60">
+                    {currentStation.frequency || "98.1 MHz"}
+                  </span>
+                </div>
+              </button>
             </div>
-          </button>
+          </Draggable>
         </div>
       )}
     </>

@@ -17,7 +17,7 @@ export default function About() {
 
           <div className="space-y-8">
             <section className="prose prose-lg dark:prose-invert">
-              <p className="text-muted-foreground">
+              <p className="text-gray-200">
                 Welcome to Online Nepali FM, your gateway to publicly available
                 Nepali radio stations. We provide a simple, user-friendly
                 platform for listeners to tune into their favorite Nepali
@@ -75,17 +75,15 @@ export default function About() {
             </section>
 
             <section className="bg-accent/80 p-6 rounded-lg">
-              <h2 className="text-2xl font-semibold mb-4 text-accent-foreground">
-                Our Mission
-              </h2>
-              <p className="text-accent-foreground mb-4">
+              <h2 className="text-2xl font-semibold mb-4 ">Our Mission</h2>
+              <p className="mb-4">
                 At Online Nepali FM, we aim to connect Nepali communities
                 worldwide with their favorite radio stations. Our platform is
                 designed to be a bridge between listeners and publicly available
                 Nepali broadcasts, helping you stay in touch with news, music,
                 and culture from Nepal, no matter where you are.
               </p>
-              <p className="text-accent-foreground mb-4">
+              <p className="mb-4">
                 We're committed to providing a free, accessible service that
                 respects copyright and broadcasting rights. Our platform only
                 streams publicly available content, ensuring that we support the
@@ -93,7 +91,7 @@ export default function About() {
               </p>
               <button
                 onClick={handleClick}
-                className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors"
+                className="bg-primary/60 text-foreground px-6 py-2 border-2 border-opacity-5 border-blue-50 rounded-md hover:bg-primary/30 transition-colors"
               >
                 Start Listening Now
               </button>

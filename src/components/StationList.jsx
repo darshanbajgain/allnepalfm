@@ -85,7 +85,7 @@ export default function StationList() {
     );
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-6">
+    <div className="grid grid-cols-2 mb-8 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-6">
       {filteredStations.map((station) => (
         <Card
           key={station.id}

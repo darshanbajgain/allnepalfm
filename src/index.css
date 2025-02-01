@@ -4,37 +4,75 @@
 
 @layer base {
   :root {
-    --background: 147 30% 10%; /* Darker green for depth */
-    --sidebar: 147 35% 8%; /* More contrast */
-    --card: 147 30% 14%; /* Deeper for readability */
-    --popover: 147 28% 12%; /* More contrast */
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 285 100% 70%; /* Brighter purple */
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 147 45% 26%; /* More vivid */
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 147 20% 18%;
-    --muted-foreground: 0 0% 80%; /* Improved readability */
-
-    --accent: 285 90% 65%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 147 25% 22%; /* Slightly brighter */
-    --input: 147 25% 20%; /* Better contrast */
-    --ring: 285 100% 70%; /* Matches primary */
-
+    --background: 220 40% 10%; /* Dark navy blue */
     --foreground: 0 0% 98%;
+
+    --card: 220 40% 13%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 40% 13%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 330 100% 70%; /* Vibrant pink */
+    --primary-foreground: 220 40% 10%;
+
+    --secondary: 220 40% 20%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 40% 20%;
+    --muted-foreground: 220 10% 70%;
+
+    --accent: 330 80% 60%; /* Slightly muted pink for accents */
+    --accent-foreground: 220 40% 10%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 40% 20%;
+    --input: 220 40% 15%;
+    --ring: 330 100% 70%;
+
+    --radius: 0.5rem;
+
+    /* Dark theme base colors */
+    /*
+    --background: 147 32% 12%; 
+    --card: 147 28% 16%; 
+    --popover: 147 30% 14%; 
+    --popover-foreground: 0 0% 100%; 
+
+    
+    --primary: 285 100% 65%; 
+    --primary-foreground: 0 0% 100%; 
+
+    
+    --secondary: 147 40% 24%; 
+    --secondary-foreground: 0 0% 100%; 
+
+    
+    --muted: 147 20% 20%; 
+    --muted-foreground: 0 0% 70%; 
+
+    
+    --accent: 285 90% 65%; 
+    --accent-foreground: 0 0% 100%; 
+
+    
+    --destructive: 0 84% 60%; 
+    --destructive-foreground: 0 0% 100%; 
+
+    
+    --border: 147 25% 20%; 
+    --input: 147 25% 18%; 
+    --ring: 285 100% 65%; 
+
+    
+    --foreground: 0 0% 98%; 
+    */
   }
 
   html {
     font-family: Inter, system-ui, sans-serif;
-    @apply scroll-smooth; /* Smooth scrolling */
   }
 }
 
@@ -48,7 +86,7 @@
   }
 }
 
-/* 🎧 Custom styles for the audio player */
+/* Custom styles for the audio player */
 .player-override.rhap_container {
   background-color: transparent;
   box-shadow: none;
@@ -58,21 +96,21 @@
 .player-override .rhap_main-controls-button,
 .player-override .rhap_volume-button,
 .player-override .rhap_time {
-  @apply text-white transition-opacity opacity-80 hover:opacity-100;
+  color: white;
 }
 
 .player-override .rhap_progress-filled,
 .player-override .rhap_progress-indicator {
-  background-color: #fff; /* White progress bar */
+  background-color: hsl(var(--primary));
 }
 
 .player-override .rhap_progress-bar,
 .player-override .rhap_volume-bar {
-  background-color: rgba(255, 255, 255, 0.2); /* Subtle background */
+  background-color: hsl(var(--muted));
 }
 
 .player-override .rhap_volume-indicator {
-  background: white;
+  background: hsl(var(--primary));
 }
 
 .player-override .rhap_progress-section {
@@ -80,25 +118,5 @@
 }
 
 .player-override .rhap_controls-section {
-  @apply transition-all duration-200 ease-in-out;
-}
-
-/* 🚀 Glassmorphism Effect */
-@layer utilities {
-  .glass-effect {
-    @apply bg-clip-padding backdrop-filter backdrop-blur-md;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-}
-
-/* ✨ Hover and Focus Effects */
-@layer utilities {
-  .btn-hover {
-    @apply transition-all duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg;
-  }
-
-  .input-focus {
-    @apply focus:ring-2 focus:ring-primary focus:outline-none;
-  }
+  margin-top: 0;
 }

@@ -42,7 +42,7 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen">
       <SidebarProvider>
         <div className="flex w-full">
           {!isMobile && (

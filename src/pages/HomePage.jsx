@@ -95,7 +95,7 @@ export default function HomePage() {
             Listen by Province:
           </h1>
           {selectedFilter === "all" && (
-            <div className="w-full max-w-sm md:max-w-xl lg:max-w-7xl mx-auto">
+            <div className="w-full min-h-52 max-w-sm md:max-w-xl lg:max-w-7xl mx-auto">
               <CategoriesSection
                 selectedProvince={selectedProvince}
                 setSelectedProvince={handleProvinceSelect}

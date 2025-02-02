@@ -186,6 +186,7 @@ export default function Player() {
 
               <button
                 onClick={handleMaximize}
+                onTouchStart={handleMaximize}
                 className="flex items-center gap-3 text-white"
               >
                 <Avatar className="h-10 w-10 rounded-sm">

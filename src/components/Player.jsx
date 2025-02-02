@@ -46,7 +46,14 @@ export default function Player() {
     setIsMinimized(true);
   };
 
-  const handleMaximize = (e) => {
+  const handleMaximize = () => {
+    if (!isDragging) {
+      setIsMinimized(false);
+    }
+  };
+
+  // Add touch event handler for mobile view
+  const handleTouchMaximize = (e) => {
     if (!isDragging) {
       setIsMinimized(false);
     }
@@ -106,6 +113,7 @@ export default function Player() {
                       variant="ghost"
                       size="icon"
                       onClick={handleMinimize}
+                      onTouchStart={handleTouchMaximize}
                       className="text-white hover:bg-white"
                     >
                       <Minimize2 className="h-4 w-4" />

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { Progress } from "@/components/ui/progress";
 import { usePlayerStore } from "@/store/playerStore";
 import {
   Play,
@@ -9,8 +10,10 @@ import {
   Volume2,
   VolumeX,
   Loader2,
+  Radio,
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 
 export function CustomAudioPlayer({
   src,
@@ -23,8 +26,9 @@ export function CustomAudioPlayer({
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isBuffering, setIsBuffering] = useState(true);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(0.8);
   const [isMuted, setIsMuted] = useState(false);
+  const [bufferingProgress, setBufferingProgress] = useState(0);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -38,6 +42,7 @@ export function CustomAudioPlayer({
       const handlePlaying = () => {
         setIsPlaying(true);
         setIsBuffering(false);
+        setBufferingProgress(100); // Fully buffered when playing
         onPlay();
       };
       const handlePause = () => {
@@ -46,19 +51,35 @@ export function CustomAudioPlayer({
       };
       const handleWaiting = () => {
         setIsBuffering(true);
+        // Start with a small progress to indicate something is happening
+        setBufferingProgress(10);
       };
       const handleCanPlay = () => {
         setIsBuffering(false);
+        setBufferingProgress(100);
       };
       const handleError = (e) => {
         setIsBuffering(false);
+        setBufferingProgress(0);
         onError(e);
+      };
+      const handleProgress = () => {
+        // Update buffering progress based on buffered ranges
+        if (audio.buffered.length > 0) {
+          const bufferedEnd = audio.buffered.end(audio.buffered.length - 1);
+          const duration = audio.duration;
+          if (duration > 0) {
+            const progress = Math.round((bufferedEnd / duration) * 100);
+            setBufferingProgress(progress);
+          }
+        }
       };
 
       audio.addEventListener("playing", handlePlaying);
       audio.addEventListener("pause", handlePause);
       audio.addEventListener("waiting", handleWaiting);
       audio.addEventListener("canplay", handleCanPlay);
+      audio.addEventListener("progress", handleProgress);
       audio.addEventListener("error", handleError);
 
       return () => {
@@ -66,6 +87,7 @@ export function CustomAudioPlayer({
         audio.removeEventListener("pause", handlePause);
         audio.removeEventListener("waiting", handleWaiting);
         audio.removeEventListener("canplay", handleCanPlay);
+        audio.removeEventListener("progress", handleProgress);
         audio.removeEventListener("error", handleError);
       };
     }
@@ -97,24 +119,39 @@ export function CustomAudioPlayer({
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
       <audio ref={audioRef} src={src} autoPlay />
 
-      <div className="flex items-center justify-center gap-4">
+      {/* Buffering progress indicator */}
+      {isBuffering && (
+        <div className="mb-2">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-2">
+              <Radio className="h-4 w-4 text-primary animate-pulse" />
+              <span className="text-xs text-muted-foreground">Buffering stream...</span>
+            </div>
+            <span className="text-xs font-medium">{bufferingProgress}%</span>
+          </div>
+          <Progress value={bufferingProgress} className="h-1" />
+        </div>
+      )}
+
+      {/* Main controls */}
+      <div className="audio-controls">
         <Button
           variant="ghost"
           size="icon"
           onClick={onPrevious}
-          className="text-white hover:bg-white transition-colors"
+          className="text-muted-foreground hover:text-white hover:bg-muted/20 transition-colors"
         >
-          <SkipBack className="h-6 w-6" />
+          <SkipBack className="h-5 w-5 sm:h-6 sm:w-6" />
         </Button>
 
         <Button
           variant="ghost"
           size="icon"
           onClick={togglePlay}
-          className="h-12 w-12 rounded-full bg-primary/10 text-primary hover:bg-primary/20 hover:text-white transition-colors"
+          className="play-button"
           disabled={isBuffering}
         >
           {isBuffering ? (
@@ -122,7 +159,7 @@ export function CustomAudioPlayer({
           ) : isPlaying ? (
             <Pause className="h-6 w-6" />
           ) : (
-            <Play className="h-6 w-6 ml-1" />
+            <Play className="h-6 w-6 ml-0.5" />
           )}
         </Button>
 
@@ -130,34 +167,44 @@ export function CustomAudioPlayer({
           variant="ghost"
           size="icon"
           onClick={onNext}
-          className="text-white hover:bg-white transition-colors"
+          className="text-muted-foreground hover:text-white hover:bg-muted/20 transition-colors"
         >
-          <SkipForward className="h-6 w-6" />
+          <SkipForward className="h-5 w-5 sm:h-6 sm:w-6" />
         </Button>
       </div>
 
-      <div className="flex items-center gap-2 px-4">
+      {/* Volume controls */}
+      <div className="flex items-center gap-2 px-2 sm:px-4">
         <Button
           variant="ghost"
-          size="icon"
+          size="sm"
           onClick={toggleMute}
-          className="text-white hover:bg-white"
+          className="text-muted-foreground hover:text-white hover:bg-muted/20 h-8 w-8 p-0"
         >
           {isMuted ? (
-            <VolumeX className="h-5 w-5" />
+            <VolumeX className="h-4 w-4 sm:h-5 sm:w-5" />
           ) : (
-            <Volume2 className="h-5 w-5" />
+            <Volume2 className="h-4 w-4 sm:h-5 sm:w-5" />
           )}
         </Button>
         <Slider
-          defaultValue={[1]}
+          defaultValue={[0.8]}
           max={1}
           step={0.01}
           value={[volume]}
           onValueChange={handleVolumeChange}
-          className="w-28"
+          className="w-24 sm:w-32"
         />
       </div>
     </div>
   );
 }
+
+CustomAudioPlayer.propTypes = {
+  src: PropTypes.string.isRequired,
+  onPlay: PropTypes.func.isRequired,
+  onPause: PropTypes.func.isRequired,
+  onNext: PropTypes.func.isRequired,
+  onPrevious: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
+};

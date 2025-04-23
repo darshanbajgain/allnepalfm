@@ -4,6 +4,7 @@ import { useThemeStore } from "@/store/themeStore";
 import { AppSidebar } from "@/layouts/Sidebar";
 import MobileNavigation from "@/components/MobileNavigation";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import PropTypes from "prop-types";
 
 export default function Layout({ children }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -46,14 +47,14 @@ export default function Layout({ children }) {
       <SidebarProvider>
         <div className="flex w-full">
           {!isMobile && (
-            <div className="hidden lg:block w-64 flex-shrink-0 bg-sidebar">
+            <div className="hidden lg:block w-64 flex-shrink-0 bg-sidebar border-r border-border/30">
               <AppSidebar activeTab={activeTab} onTabChange={handleTabChange} />
             </div>
           )}
           <SidebarInset className="flex-1 min-w-0 bg-background">
             <div className="flex flex-col h-full">
-              <main className="flex-1 overflow-auto h-screen xl:overflow-hidden">
-                <div className="h-full w-full max-w-[1400px] mx-auto px-2 md:px-4 xl:px-6 mb-8">
+              <main className="flex-1 overflow-auto h-screen pb-16 lg:pb-0 xl:overflow-hidden">
+                <div className="h-full w-full max-w-[1400px] mx-auto px-3 sm:px-4 md:px-6 xl:px-8 py-4 sm:py-6">
                   {children}
                 </div>
               </main>
@@ -70,3 +71,7 @@ export default function Layout({ children }) {
     </div>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

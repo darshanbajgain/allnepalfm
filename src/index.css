@@ -4,71 +4,49 @@
 
 @layer base {
   :root {
+    /* Base colors */
     --background: 220 40% 10%; /* Dark navy blue */
     --foreground: 0 0% 98%;
 
+    /* Card colors */
     --card: 220 40% 13%;
     --card-foreground: 0 0% 98%;
 
+    /* Popover colors */
     --popover: 220 40% 13%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 330 100% 70%; /* Vibrant pink */
+    /* Primary colors - Vibrant pink */
+    --primary: 330 100% 70%;
     --primary-foreground: 220 40% 10%;
 
+    /* Secondary colors */
     --secondary: 220 40% 20%;
     --secondary-foreground: 0 0% 98%;
 
+    /* Muted colors */
     --muted: 220 40% 20%;
     --muted-foreground: 220 10% 70%;
 
-    --accent: 330 80% 60%; /* Slightly muted pink for accents */
+    /* Accent colors - Slightly muted pink */
+    --accent: 330 80% 60%;
     --accent-foreground: 220 40% 10%;
 
+    /* Destructive colors */
     --destructive: 0 100% 50%;
     --destructive-foreground: 210 40% 98%;
 
+    /* Border and input colors */
     --border: 220 40% 20%;
     --input: 220 40% 15%;
     --ring: 330 100% 70%;
 
+    /* Sidebar specific */
+    --sidebar: 220 45% 8%;
+    --sidebar-foreground: 0 0% 98%;
+
+    /* Border radius */
     --radius: 0.5rem;
-
-    /* Dark theme base colors */
-    /*
-    --background: 147 32% 12%; 
-    --card: 147 28% 16%; 
-    --popover: 147 30% 14%; 
-    --popover-foreground: 0 0% 100%; 
-
-    
-    --primary: 285 100% 65%; 
-    --primary-foreground: 0 0% 100%; 
-
-    
-    --secondary: 147 40% 24%; 
-    --secondary-foreground: 0 0% 100%; 
-
-    
-    --muted: 147 20% 20%; 
-    --muted-foreground: 0 0% 70%; 
-
-    
-    --accent: 285 90% 65%; 
-    --accent-foreground: 0 0% 100%; 
-
-    
-    --destructive: 0 84% 60%; 
-    --destructive-foreground: 0 0% 100%; 
-
-    
-    --border: 147 25% 20%; 
-    --input: 147 25% 18%; 
-    --ring: 285 100% 65%; 
-
-    
-    --foreground: 0 0% 98%; 
-    */
   }
 
   html {
@@ -83,6 +61,66 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Custom utility classes */
+@layer components {
+  /* Typography */
+  .heading-1 {
+    @apply text-3xl font-bold tracking-tight;
+  }
+
+  .heading-2 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+
+  .heading-3 {
+    @apply text-xl font-semibold tracking-tight;
+  }
+
+  .heading-4 {
+    @apply text-lg font-semibold tracking-tight;
+  }
+
+  .body-large {
+    @apply text-base leading-7;
+  }
+
+  .body {
+    @apply text-sm leading-6;
+  }
+
+  .body-small {
+    @apply text-xs leading-5;
+  }
+
+  /* Spacing */
+  .section-padding {
+    @apply px-4 py-6 md:px-6 md:py-8 lg:px-8 lg:py-10;
+  }
+
+  .card-padding {
+    @apply p-3 sm:p-4 md:p-5;
+  }
+
+  /* Card styles */
+  .station-card {
+    @apply bg-card border border-border/30 rounded-xl transition-all duration-300 hover:shadow-lg;
+  }
+
+  /* Button styles */
+  .icon-button {
+    @apply flex items-center justify-center rounded-full;
+  }
+
+  /* Audio player styles */
+  .audio-controls {
+    @apply flex items-center justify-center gap-2 sm:gap-4;
+  }
+
+  .play-button {
+    @apply h-12 w-12 rounded-full bg-primary/10 text-primary hover:bg-primary/20 hover:text-white transition-colors;
   }
 }
 

@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { Button } from "@components/ui/button";
-import { Card, CardContent } from "@components/ui/card";
-import { X, Minimize2, GripVertical } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { X, Minimize2, GripVertical, Radio, AlertCircle } from "lucide-react";
 import { usePlayerStore } from "@/store/playerStore";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle } from "lucide-react";
 import { CustomAudioPlayer } from "./CustomAudioPlayer";
-import Draggable from "react-draggable"; // Import Draggable
+import Draggable from "react-draggable";
 
 export default function Player() {
   const {
@@ -28,12 +27,25 @@ export default function Player() {
   // Load position from localStorage
   const getSavedPosition = () => {
     if (typeof window !== "undefined") {
+      // Check if we're on mobile (smaller screen)
+      const isMobileView = window.innerWidth < 768;
+
       const savedPos = localStorage.getItem("playerPosition");
-      return savedPos
-        ? JSON.parse(savedPos)
-        : { x: 20, y: window.innerHeight - 100 }; // Start at bottom-left
+      if (savedPos) {
+        const pos = JSON.parse(savedPos);
+        // Make sure the position is valid for the current screen size
+        return {
+          x: Math.min(pos.x, window.innerWidth - 200),
+          y: Math.min(pos.y, window.innerHeight - 150)
+        };
+      } else {
+        // Default position - top right on mobile, bottom left on desktop
+        return isMobileView
+          ? { x: window.innerWidth - 220, y: 20 } // Top right on mobile
+          : { x: 20, y: window.innerHeight - 150 }; // Bottom left on desktop
+      }
     }
-    return { x: 20, y: window.innerHeight - 100 };
+    return { x: 20, y: 20 }; // Fallback
   };
 
   const [position, setPosition] = useState(getSavedPosition());
@@ -53,7 +65,7 @@ export default function Player() {
   };
 
   // Add touch event handler for mobile view
-  const handleTouchMaximize = (e) => {
+  const handleTouchMaximize = () => {
     if (!isDragging) {
       setIsMinimized(false);
     }
@@ -68,7 +80,7 @@ export default function Player() {
 
   // Save position on drag stop
   const handleDragStart = () => setIsDragging(true);
-  const handleDragStop = (e, data) => {
+  const handleDragStop = (_, data) => {
     setIsDragging(false);
     setPosition({ x: data.x, y: data.y });
     localStorage.setItem(
@@ -77,44 +89,70 @@ export default function Player() {
     );
   };
 
-  if (!showPlayer || !currentStation) return null;
+  // Add effect to handle window resize and keep player in view
+  useEffect(() => {
+    const handleResize = () => {
+      // If the player is minimized, make sure it stays in view
+      if (isMinimized) {
+        const maxX = window.innerWidth - 200;
+        const maxY = window.innerHeight - 150;
+
+        // If the current position is outside the viewport, adjust it
+        if (position.x > maxX || position.y > maxY) {
+          const newPosition = {
+            x: Math.min(position.x, maxX),
+            y: Math.min(position.y, maxY)
+          };
+          setPosition(newPosition);
+          localStorage.setItem("playerPosition", JSON.stringify(newPosition));
+        }
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isMinimized, position]);
 
   if (!showPlayer || !currentStation) return null;
+
   return (
     <>
       <div className={isMinimized ? "hidden" : "block"}>
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-end justify-center sm:items-center p-4">
           <div className="w-full max-w-2xl animate-in slide-in-from-bottom duration-300">
-            <Card className="bg-[#0A0B1E] border-t border-white/10 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-4">
-                    <Avatar className="h-14 w-14 rounded-sm">
+            <Card className="bg-card border border-border/30 shadow-lg">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-center justify-between mb-4 sm:mb-6">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <Avatar className="h-12 w-12 sm:h-14 sm:w-14 rounded-md">
                       <AvatarImage
                         src={currentStation.img}
                         alt={currentStation.name}
                         className="object-cover"
                       />
-                      <AvatarFallback className="rounded-2xl bg-primary/20 text-primary">
+                      <AvatarFallback className="rounded-md bg-primary/20 text-primary">
                         {currentStation.name.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <h3 className="text-lg font-medium text-white mb-1">
+                      <h3 className="text-base sm:text-lg font-medium text-foreground mb-0.5 sm:mb-1">
                         {currentStation.name}
                       </h3>
-                      <p className="text-sm text-white/60">
-                        {currentStation.frequency || "98.1 MHz"}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <Radio className="h-3 w-3 text-primary" />
+                        <p className="text-xs sm:text-sm text-muted-foreground">
+                          {currentStation.frequency || "98.1 MHz"}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1 sm:gap-2">
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={handleMinimize}
                       onTouchStart={handleTouchMaximize}
-                      className="text-white hover:bg-white"
+                      className="h-8 w-8 sm:h-9 sm:w-9 text-muted-foreground hover:text-foreground hover:bg-muted/20"
                     >
                       <Minimize2 className="h-4 w-4" />
                     </Button>
@@ -122,7 +160,7 @@ export default function Player() {
                       variant="ghost"
                       size="icon"
                       onClick={() => setShowPlayer(false)}
-                      className="text-white hover:bg-white"
+                      className="h-8 w-8 sm:h-9 sm:w-9 text-muted-foreground hover:text-foreground hover:bg-muted/20"
                     >
                       <X className="h-4 w-4" />
                     </Button>
@@ -132,10 +170,10 @@ export default function Player() {
                 {error && (
                   <Alert
                     variant="destructive"
-                    className="mb-4 bg-red-900/50 border-red-500 text-white"
+                    className="mb-4 bg-destructive/20 border-destructive/50 text-foreground"
                   >
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>{error}</AlertDescription>
+                    <AlertCircle className="h-4 w-4 text-destructive" />
+                    <AlertDescription className="text-sm">{error}</AlertDescription>
                   </Alert>
                 )}
 
@@ -160,52 +198,55 @@ export default function Player() {
       {isMinimized && (
         <div className="fixed inset-0 z-50 pointer-events-none">
           <Draggable
-            bounds="parent" // Ensure dragging stays inside viewport
-            defaultPosition={position} // Set the initial position
+            bounds={{top: 0, left: 0, right: window.innerWidth - 200, bottom: window.innerHeight - 150}}
+            position={position}
             onStart={handleDragStart}
-            onStop={handleDragStop} // Save position when dragging stops
+            onStop={handleDragStop}
           >
-            <div className="absolute p-3 bg-[#0A0B1E] shadow-lg rounded-lg flex items-center gap-4 cursor-move pointer-events-auto">
+            <div className="absolute p-2 sm:p-3 bg-card border-2 border-primary/30 shadow-xl rounded-lg flex items-center gap-2 sm:gap-3 cursor-move pointer-events-auto z-50 mb-20 sm:mb-0">
               {error && (
                 <Alert
                   variant="destructive"
-                  className="absolute right-0 bg-red-900/50 border-red-500 text-white bottom-full mb-2 w-[300px]"
+                  className="absolute right-0 bg-destructive/20 border-destructive/50 text-foreground bottom-full mb-2 w-[250px] sm:w-[300px]"
                 >
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{error}</AlertDescription>
+                  <AlertCircle className="h-4 w-4 text-destructive" />
+                  <AlertDescription className="text-xs">{error}</AlertDescription>
                 </Alert>
               )}
 
               {/* Drag Handle */}
               <div
-                className="cursor-grab active:cursor-grabbing text-white/50 hover:text-white"
+                className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground"
                 title="Drag"
               >
-                <GripVertical className="h-5 w-5" />
+                <GripVertical className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
 
               <button
                 onClick={handleMaximize}
                 onTouchStart={handleMaximize}
-                className="flex items-center gap-3 text-white"
+                className="flex items-center gap-2 sm:gap-3 text-foreground"
               >
-                <Avatar className="h-10 w-10 rounded-sm">
+                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 rounded-md">
                   <AvatarImage
                     src={currentStation.img}
                     alt={currentStation.name}
                     className="object-cover"
                   />
-                  <AvatarFallback className="rounded-sm bg-primary/20 text-primary">
+                  <AvatarFallback className="rounded-md bg-primary/20 text-primary">
                     {currentStation.name.slice(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium">
+                  <span className="text-xs sm:text-sm font-medium">
                     {currentStation.name}
                   </span>
-                  <span className="text-xs text-white/60">
-                    {currentStation.frequency || "98.1 MHz"}
-                  </span>
+                  <div className="flex items-center gap-1">
+                    <Radio className="h-2 w-2 text-primary" />
+                    <span className="text-xs text-muted-foreground">
+                      {currentStation.frequency || "98.1 MHz"}
+                    </span>
+                  </div>
                 </div>
               </button>
             </div>

@@ -67,7 +67,7 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <div className="w-full relative flex flex-col mt-4 items-start p-4">
+      <div className="w-full relative flex flex-col mt-4 items-start p-4 max-h-screen">
         <div className="w-full flex flex-row justify-between items-center gap-4 mb-8">
           <div className="flex flex-row gap-2 items-center">
             {filters.map((filter) => (

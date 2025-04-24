@@ -17,7 +17,7 @@ export default function About() {
 
           <div className="space-y-8">
             <section className="prose prose-lg dark:prose-invert">
-              <p className="text-gray-200">
+              <p className=" text-foreground">
                 Welcome to Online Nepali FM, your gateway to publicly available
                 Nepali radio stations. We provide a simple, user-friendly
                 platform for listeners to tune into their favorite Nepali
@@ -26,7 +26,7 @@ export default function About() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold mb-4 text-primary dark:text-primary-foreground">
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">
                 What We Offer
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -35,26 +35,26 @@ export default function About() {
                     icon: Radio,
                     title: "Live Streaming",
                     description:
-                      "Access to live streams of public Nepali radio stations.",
+                      "Access to live streams of public Nepali radio stations."
                   },
                   {
                     icon: Music,
                     title: "Diverse Content",
                     description:
-                      "A variety of content including music, news, and cultural programs.",
+                      "A variety of content including music, news, and cultural programs."
                   },
                   {
                     icon: Headphones,
                     title: "Easy Listening",
                     description:
-                      "Simple interface for a seamless listening experience.",
+                      "Simple interface for a seamless listening experience."
                   },
                   {
                     icon: Globe,
                     title: "Global Access",
                     description:
-                      "Listen to Nepali stations from anywhere in the world.",
-                  },
+                      "Listen to Nepali stations from anywhere in the world."
+                  }
                 ].map((item, index) => (
                   <div
                     key={index}
@@ -74,7 +74,7 @@ export default function About() {
               </div>
             </section>
 
-            <section className="bg-accent/80 p-6 rounded-lg">
+            <section className=" bg-card dark:bg-card/50 p-6 rounded-lg">
               <h2 className="text-2xl font-semibold mb-4 ">Our Mission</h2>
               <p className="mb-4">
                 At Online Nepali FM, we aim to connect Nepali communities
@@ -91,7 +91,7 @@ export default function About() {
               </p>
               <button
                 onClick={handleClick}
-                className="bg-primary/60 text-foreground px-6 py-2 border-2 border-opacity-5 border-blue-50 rounded-md hover:bg-primary/30 transition-colors"
+                className="bg-primary/60 text-white px-6 py-2 border-2 border-opacity-5 border-blue-50 rounded-md hover:bg-primary/50 transition-colors"
               >
                 Start Listening Now
               </button>

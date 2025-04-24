@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Progress } from "@/components/ui/progress";
-import { usePlayerStore } from "@/store/playerStore";
 import {
   Play,
   Pause,

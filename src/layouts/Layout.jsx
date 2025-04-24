@@ -26,8 +26,12 @@ export default function Layout({ children }) {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
+  // Apply theme on initial load and when it changes
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
+    // Remove both classes first to ensure clean state
+    document.documentElement.classList.remove("light", "dark");
+    // Add the current theme class
+    document.documentElement.classList.add(theme);
   }, [theme]);
 
   useEffect(() => {

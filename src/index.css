@@ -3,7 +3,55 @@
 @tailwind utilities;
 
 @layer base {
+  /* Light theme (default) */
   :root {
+    /* Base colors */
+    --background: 0 0% 100%;
+    --foreground: 220 40% 10%;
+
+    /* Card colors */
+    --card: 0 0% 98%;
+    --card-foreground: 220 40% 10%;
+
+    /* Popover colors */
+    --popover: 0 0% 98%;
+    --popover-foreground: 220 40% 10%;
+
+    /* Primary colors - Vibrant pink */
+    --primary: 330 100% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary colors */
+    --secondary: 220 20% 90%;
+    --secondary-foreground: 220 40% 10%;
+
+    /* Muted colors */
+    --muted: 220 20% 94%;
+    --muted-foreground: 220 10% 40%;
+
+    /* Accent colors - Slightly muted pink */
+    --accent: 330 80% 96%;
+    --accent-foreground: 330 80% 40%;
+
+    /* Destructive colors */
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border and input colors */
+    --border: 220 20% 65%;
+    --input: 220 20% 96%;
+    --ring: 330 100% 60%;
+
+    /* Sidebar specific */
+    --sidebar: 220 20% 96%;
+    --sidebar-foreground: 220 40% 10%;
+
+    /* Border radius */
+    --radius: 0.5rem;
+  }
+
+  /* Dark theme */
+  .dark {
     /* Base colors */
     --background: 220 40% 10%; /* Dark navy blue */
     --foreground: 0 0% 98%;
@@ -37,16 +85,13 @@
     --destructive-foreground: 210 40% 98%;
 
     /* Border and input colors */
-    --border: 220 40% 20%;
+    --border: 220 40% 40%;
     --input: 220 40% 15%;
     --ring: 330 100% 70%;
 
     /* Sidebar specific */
     --sidebar: 220 45% 8%;
     --sidebar-foreground: 0 0% 98%;
-
-    /* Border radius */
-    --radius: 0.5rem;
   }
 
   html {

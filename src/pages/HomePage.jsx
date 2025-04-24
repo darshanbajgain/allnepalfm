@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@components/ui/select";
+} from "@/components/ui/select";
 import StationList from "@/components/StationList";
 import useSearchStore from "@/store/searchStore";
 import Layout from "@/layouts/Layout";
@@ -68,8 +68,8 @@ export default function HomePage() {
   return (
     <Layout>
       <div className="w-full relative flex flex-col mt-4 items-start p-4">
-        <div className="w-full flex flex-row justify-between gap-4 mb-8">
-          <div className="flex flex-row gap-2 justify-center">
+        <div className="w-full flex flex-row justify-between items-center gap-4 mb-8">
+          <div className="flex flex-row gap-2 items-center">
             {filters.map((filter) => (
               <button
                 key={filter.id}
@@ -79,13 +79,14 @@ export default function HomePage() {
                   "border border-border tracking-widest",
                   selectedFilter === filter.id
                     ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                    : "bg-background text-foreground hover:bg-primary/10"
+                    : "bg-card text-foreground hover:bg-primary/10"
                 )}
               >
                 {filter.label}
               </button>
             ))}
           </div>
+          <Header isMobile={isMobile} />
         </div>
         <div
           ref={stationListRef}
@@ -110,12 +111,12 @@ export default function HomePage() {
                 onValueChange={handleProvinceSelect}
                 className="text-xs xl:text-sm ring-border focus:outline-border focus:ring-border"
               >
-                <SelectTrigger className="w-full h-8 sm:h-10 sm:w-[200px] text-xs xl:text-sm">
+                <SelectTrigger className="w-full h-8 sm:h-10 sm:w-[200px] text-xs xl:text-sm bg-card border-border/30">
                   <SelectValue placeholder="Filter by Province" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-card border-border/30">
                   {provinces.map((province) => (
-                    <SelectItem key={province} value={province}>
+                    <SelectItem key={province} value={province} className="focus:bg-primary/10 focus:text-foreground">
                       {province}
                     </SelectItem>
                   ))}
